@@ -31,9 +31,13 @@ class Student extends UserType {
         courses = new HashMap<>();
     }
 
+    public HashMap<Integer, Course> getCourses() {
+        return courses;
+    }
+
     public boolean addCourse (Course course) {
         //Kdam check
-        if ((!courses.containsValue(course)) && (course.registerStudent(courses))) {
+        if ((!courses.containsValue(course)) && (course.registerStudent(this))) {
             courses.put(course.getCourseNum(), course);
             return true;
         }
@@ -43,7 +47,7 @@ class Student extends UserType {
     }
 
     public boolean removeCourse (Integer courseNumber, Course course) {
-        if (course.unregisterStudent(courses)) {
+        if (course.unregisterStudent(this)) {
             courses.remove(courseNumber, course);
             return true;
         }

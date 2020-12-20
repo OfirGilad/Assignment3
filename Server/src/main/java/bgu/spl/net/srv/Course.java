@@ -8,17 +8,20 @@ public class Course {
     int[] KdamCoursesList;
     int numOfMaxStudent;
     int currentNumberOfStudents = 0;
+    HashMap<String,Student> registeredStudents;
 
     public Course (int courseNum, String courseName, int[] KdamCoursesList, int numOfMaxStudent) {
         this.courseNum = courseNum;
         this.courseName = courseName;
         this.KdamCoursesList = KdamCoursesList;
         this.numOfMaxStudent = numOfMaxStudent;
+        registeredStudents = new HashMap<>();
     }
 
-    public boolean registerStudent(HashMap<Integer, Course> courses) {
-        if (isEligible(courses)) {
+    public boolean registerStudent(Student student) {
+        if (isEligible(student.getCourses())) {
             currentNumberOfStudents ++;
+            registeredStudents.put(student.getUsername(), student);
             return true;
         }
         else {
@@ -26,9 +29,10 @@ public class Course {
         }
     }
 
-    public boolean unregisterStudent(HashMap<Integer, Course> courses) {
-        if (courses.containsKey(courseNum)) {
+    public boolean unregisterStudent(Student student) {
+        if (registeredStudents.containsValue(student)) {
             currentNumberOfStudents --;
+            registeredStudents.remove(student.getUsername(), student);
             return true;
         }
         else {
