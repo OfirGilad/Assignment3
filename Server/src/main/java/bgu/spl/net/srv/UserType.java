@@ -1,6 +1,6 @@
 package bgu.spl.net.srv;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 public abstract class UserType {
 
@@ -8,7 +8,7 @@ public abstract class UserType {
     protected final String password;
 
 
-    public UserType (String username, String password) {
+    public UserType(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -24,46 +24,57 @@ public abstract class UserType {
 }
 
 class Student extends UserType {
-    private final HashMap<Integer, Course> courses;
+    private final TreeMap<Integer, Course> courses;
 
-    public Student (String username, String password) {
+    public Student(String username, String password) {
         super(username, password);
-        courses = new HashMap<>();
+        courses = new TreeMap<>();
     }
 
-    public HashMap<Integer, Course> getCourses() {
+    public TreeMap<Integer, Course> getCourses() {
         return courses;
     }
 
-    public boolean addCourse (Course course) {
-        //Kdam check
-        if ((!courses.containsValue(course)) && (course.registerStudent(this))) {
-            courses.put(course.getCourseNum(), course);
-            return true;
+    public String registerToCourse(Course course) {
+        if (!courses.containsValue(course)) {
+            if (!course.isFull()) {
+                if (!course.isEligible(courses)) {
+                    course.registerStudent(this);
+                    courses.put(course.getCourseNum(), course);
+                    return "User registered successfully";
+                }
+                else {
+                    return "User isn't meet the Kdam curses requirement";
+                }
+            }
+            else {
+                return "Course is full";
+            }
         }
         else {
-            return false;
+            return "User is already registered";
         }
     }
 
-    public boolean removeCourse (Integer courseNumber, Course course) {
-        if (course.unregisterStudent(this)) {
-            courses.remove(courseNumber, course);
-            return true;
+    public String unregisterToCourse(Course course) {
+        if (courses.containsValue(course)) {
+            course.unregisterStudent(this);
+            courses.remove(course.getCourseNum(), course);
+            return "User unregistered successfully";
         }
         else {
-            return false;
+            return "User is already unregistered";
         }
     }
 
-    public boolean isRegisteredToCourse (Course course) {
-        return courses.containsValue(course);
+    public boolean isRegisteredToCourse(int courseNumber) {
+        return courses.containsKey(courseNumber);
     }
 }
 
 class Admin extends UserType {
 
-    public Admin (String username, String password) {
+    public Admin(String username, String password) {
         super(username, password);
     }
 }
