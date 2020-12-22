@@ -2,7 +2,8 @@
 // Created by spl211 on 22/12/2020.
 //
 
-#include <ConnectionReader.h>
+#include <stdlib.h>
+#include "../include/ConnectionReader.h"
 
 using namespace std;
 
@@ -16,7 +17,6 @@ void ConnectionReader::run() {
         char* opCodeArray = new char[2];
         connectionHandler->getBytes(opCodeArray, 2);
         short opCode = bytesToShort(opCodeArray);
-
         string outPut;
 
         //if (opCode==9){
@@ -41,43 +41,37 @@ void ConnectionReader::run() {
         if (opCode==12){
 
             outPut = "ACK";
-
             connectionHandler->getBytes(opCodeArray, 2);
             short msgOpCode = bytesToShort(opCodeArray);
+            outPut = outPut + " " + to_string(msgOpCode);
 
-            outPut = outPut+ " " + to_string(msgOpCode);
-
-            if(msgOpCode==4 | msgOpCode==7){
-                connectionHandler->getBytes(opCodeArray, 2);
-                short numOfUsers = bytesToShort(opCodeArray);
-
-                outPut= outPut+ " " + to_string(numOfUsers);
-
-                for (int i=0; i<numOfUsers; i++){
-                    string temp;
-                    connectionHandler->getLine(temp);
-                    outPut = outPut + " " + temp.substr(0, temp.size()-1);
-                }
-            }
-            if (msgOpCode==8){
-
-                connectionHandler->getBytes(opCodeArray, 2);
-                short numPosts = bytesToShort(opCodeArray);
-
-                outPut= outPut+ " " + to_string(numPosts);
-
-                connectionHandler->getBytes(opCodeArray, 2);
-                short numFollower = bytesToShort(opCodeArray);
-
-                outPut= outPut+ " " + to_string(numFollower);
-
-                connectionHandler->getBytes(opCodeArray, 2);
-                short numFollowing = bytesToShort(opCodeArray);
-
-                outPut= outPut+ " " + to_string(numFollowing);
+            //5-11
+            if(msgOpCode == 6 | msgOpCode == 9 | msgOpCode == 11){
+                String msgData;
+                connectionHandler->getLine(msgData);
+                outPut= outPut + '\n' + to_string(msgData);
             }
 
-            if( msgOpCode==4){
+            if (msgOpCode == 7) {
+                String msgData;
+                connectionHandler->getLine(msgData);
+                outPut = outPut + '\n' + "Course: " + to_string(msgData);
+                connectionHandler->getLine(msgData);
+                outPut = outPut + '\n' + "Seats Available: " + to_string(msgData);
+                connectionHandler->getLine(msgData);
+                outPut = outPut + '\n' + "Student Registered: " + to_string(msgData);
+
+            }
+
+            if (msgOpCode == 8) {
+                String msgData;
+                connectionHandler->getLine(msgData);
+                outPut = outPut + '\n' + "Student: " + to_string(msgData);
+                connectionHandler->getLine(msgData);
+                outPut = outPut + '\n' + "Courses: " + to_string(msgData);
+            }
+
+            if(msgOpCode == 4){
                 *toTerminate=true;
             }
         }
@@ -87,13 +81,13 @@ void ConnectionReader::run() {
 
             connectionHandler->getBytes(opCodeArray, 2);
             short errorCheck = bytesToShort(opCodeArray);
+            outPut = outPut + " " + to_string(errorCheck);
 
-            outPut= outPut + " " + to_string(errorCheck);
-            if (errorCheck==3){
-                *toLogout=false;
+            if (errorCheck == 4){
+                *toLogout = false;
             }
         }
-        if (outPut!="")
+        if (outPut != "")
             cout << outPut << endl;
 
         delete[] opCodeArray;
@@ -101,12 +95,8 @@ void ConnectionReader::run() {
     }
 }
 
-short ConnectionReader::bytesToShort(char* bytesArray)
-{
+short ConnectionReader::bytesToShort(char* bytesArray) {
     short result = (short)((bytesArray[0] & 0xff) << 8);
     result += (short)(bytesArray[1] & 0xff);
     return result;
-
 }
-
-

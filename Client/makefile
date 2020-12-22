@@ -1,16 +1,19 @@
 CFLAGS:=-c -Wall -Weffc++ -g -std=c++11 -Iinclude
 LDFLAGS:=-lboost_system
 
-all: EchoClient
-	g++ -o bin/echoExample bin/connectionHandler.o bin/echoClient.o bin/KeyBoardReader.o $(LDFLAGS)
+all: Client
+	g++ -o bin/client bin/connectionHandler.o bin/ConnectionReader.o bin/CRSClient.o bin/KeyBoardReader.o $(LDFLAGS)
 
-EchoClient: bin/connectionHandler.o bin/echoClient.o bin/KeyBoardReader.o
+Client: bin/connectionHandler.o bin/ConnectionReader.o bin/CRSClient.o bin/KeyBoardReader.o
 
 bin/connectionHandler.o: src/connectionHandler.cpp
 	g++ $(CFLAGS) -o bin/connectionHandler.o src/connectionHandler.cpp
 
-bin/echoClient.o: src/echoClient.cpp
-	g++ $(CFLAGS) -o bin/echoClient.o src/echoClient.cpp
+bin/ConnectionReader.o: src/ConnectionReader.cpp
+	g++ $(CFLAGS) -o bin/ConnectionReader.o src/ConnectionReader.cpp
+
+bin/CRSClient.o: src/CRSClient.cpp
+	g++ $(CFLAGS) -o bin/CRSClient.o src/CRSClient.cpp
 
 bin/KeyBoardReader.o: src/KeyBoardReader.cpp
 	g++ $(CFLAGS) -o bin/KeyBoardReader.o src/KeyBoardReader.cpp

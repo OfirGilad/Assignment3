@@ -2,10 +2,9 @@
 // Created by spl211 on 22/12/2020.
 //
 
-#include <KeyBoardReader.h>
+#include <stdlib.h>
+#include "../include/KeyBoardReader.h"
 
-#include "KeyBoardReader.h"
-#include "connectionHandler.h"
 #include <boost/algorithm/string.hpp>
 
 using namespace std;
@@ -37,75 +36,122 @@ void KeyBoardReader::run() {
 
         boost::split(onScreenText, line, boost::is_any_of(" "));
 
-        char opCode[2];
+        char dataToBytes[2];
 
         if (onScreenText[0] == "ADMINREG") {
-            shortToBytes(1, opCode);
-            connectionHandler->sendBytes(opCode, 2);
+            shortToBytes(1, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
+            connectionHandler->sendBytes(0, 1);
             connectionHandler->sendLine(onScreenText[2]);
+            connectionHandler->sendBytes(0, 1);
 
         }
 
         if (onScreenText[0] == "STUDENTREG") {
-            shortToBytes(2, opCode);
-            connectionHandler->sendBytes(opCode, 2);
+            shortToBytes(2, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
+            connectionHandler->sendBytes(0, 1);
             connectionHandler->sendLine(onScreenText[2]);
+            connectionHandler->sendBytes(0, 1);
         }
 
         if (onScreenText[0] == "LOGIN") {
-            shortToBytes(3, opCode);
-            connectionHandler->sendBytes(opCode, 3);
+            shortToBytes(3, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
+            connectionHandler->sendBytes(0, 1);
             connectionHandler->sendLine(onScreenText[2]);
+            connectionHandler->sendBytes(0, 1);
         }
 
         if (onScreenText[0] == "LOGOUT") {
-            shortToBytes(4, opCode);
-            connectionHandler->sendBytes(opCode, 4);
+            shortToBytes(4, dataToBytes);
+            connectionHandler->sendBytes(opCode, 2);
             *toLogout = true;
         }
 
         if (onScreenText[0] == "COURSEREG") {
-            shortToBytes(5, opCode);
-            connectionHandler->sendBytes(opCode, 5);
-            connectionHandler->sendLine(onScreenText[1]);
+            shortToBytes(5, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
+            short courseNum;
+            try {
+                courseNum = boost::lexical_cast<short>(onScreenText[1]);
+            }
+            catch(bad_lexical_cast &) {
+                //Do nothing
+            }
+            shortToBytes(courseNum, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
         }
 
         if (onScreenText[0] == "KDAMCHECK") {
-            shortToBytes(6, opCode);
-            connectionHandler->sendBytes(opCode, 6);
-            connectionHandler->sendLine(onScreenText[1]);
+            shortToBytes(6, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
+            short courseNum;
+            try {
+                courseNum = boost::lexical_cast<short>(onScreenText[1]);
+            }
+            catch(bad_lexical_cast &) {
+                //Do nothing
+            }
+            shortToBytes(courseNum, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
         }
 
         if (onScreenText[0] == "COURSESTAT") {
-            shortToBytes(7, opCode);
-            connectionHandler->sendBytes(opCode, 7);
-            connectionHandler->sendLine(onScreenText[1]);
+            shortToBytes(7, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
+            short courseNum;
+            try {
+                courseNum = boost::lexical_cast<short>(onScreenText[1]);
+            }
+            catch(bad_lexical_cast &) {
+                //Do nothing
+            }
+            shortToBytes(courseNum, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
         }
 
         if (onScreenText[0] == "STUDENTSTAT") {
-            shortToBytes(8, opCode);
-            connectionHandler->sendBytes(opCode, 8);
+            shortToBytes(8, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
+            connectionHandler->sendBytes(0, 1);
         }
 
         if (onScreenText[0] == "ISREGISTERED") {
-            shortToBytes(9, opCode);
-            connectionHandler->sendBytes(opCode, 9);
-            connectionHandler->sendLine(onScreenText[1]);
+            shortToBytes(9, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
+            short courseNum;
+            try {
+                courseNum = boost::lexical_cast<short>(onScreenText[1]);
+            }
+            catch(bad_lexical_cast &) {
+                //Do nothing
+            }
+            shortToBytes(courseNum, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
         }
 
         if (onScreenText[0] == "UNREGISTER") {
-            shortToBytes(10, opCode);
-            connectionHandler->sendBytes(opCode, 10);
-            connectionHandler->sendLine(onScreenText[1]);
+            shortToBytes(10, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
+            short courseNum;
+            try {
+                courseNum = boost::lexical_cast<short>(onScreenText[1]);
+            }
+            catch(bad_lexical_cast &) {
+                //Do nothing
+            }
+            shortToBytes(courseNum, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
         }
 
         if (onScreenText[0] == "MYCOURSES") {
-            shortToBytes(11, opCode);
-            connectionHandler->sendBytes(opCode, 11);
+            shortToBytes(11, dataToBytes);
+            connectionHandler->sendBytes(dataToBytes, 2);
         }
     }
 }

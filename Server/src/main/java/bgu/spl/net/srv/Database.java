@@ -124,7 +124,7 @@ public class Database {
 				Map.Entry mapEntry = (Map.Entry)courseIterator.next();
 				studentRegistered.append(mapEntry.getKey());
 				if (courseIterator.hasNext()) {
-					studentRegistered.append(",");
+					studentRegistered.append(", ");
 				}
 			}
 			studentRegistered.append("]");
@@ -147,7 +147,7 @@ public class Database {
 					Map.Entry mapEntry = (Map.Entry) coursesIterator.next();
 					coursesRegistered.append(mapEntry.getKey());
 					if (coursesIterator.hasNext()) {
-						coursesRegistered.append(",");
+						coursesRegistered.append(", ");
 					}
 				}
 				coursesRegistered.append("]");

@@ -1,9 +1,15 @@
 #include <stdlib.h>
-#include <connectionHandler.h>
+#include "../include/connectionHandler.h"
+#include "../include/ConnectionReader.h>"
+#include "../include/KeyboardReader.h"
+#include <thread>
 
 /**
 * This code assumes that the server replies the exact text the client sent it (as opposed to the practical session example)
 */
+
+using namespace std;
+
 int main (int argc, char *argv[]) {
     if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " host port" << std::endl << std::endl;
@@ -17,8 +23,27 @@ int main (int argc, char *argv[]) {
         std::cerr << "Cannot connect to " << host << ":" << port << std::endl;
         return 1;
     }
-	
-	//From here we will see the rest of the ehco client implementation:
+
+    bool *toTerminate = new bool;
+    bool *toLogout = new bool;
+
+    *toLogout = false;
+    *toTerminate = false;
+
+    KeyBoardReader keyBoardReader(&connectionHandler,toLogout,toTerminate);
+    ConnectionReader connectionReader(&connectionHandler,toLogout,toTerminate);
+    thread connectionThread(&ConnectionReader::run, &connectionReader);
+    thread keyBoardThread(&KeyBoardReader::run, &keyBoardReader);
+    connectionThread.join();
+    keyBoardThread.join();
+
+    delete toTerminate;
+    delete toLogout;
+
+    return 0;
+
+    /*
+	//From here we will see the rest of the echo client implementation:
     while (1) {
         const short bufsize = 1024;
         char buf[bufsize];
@@ -29,7 +54,7 @@ int main (int argc, char *argv[]) {
             std::cout << "Disconnected. Exiting...\n" << std::endl;
             break;
         }
-		// connectionHandler.sendLine(line) appends '\n' to the message. Therefor we send len+1 bytes.
+		// connectionHandler.sendLine(line) appends '\n' to the message. Therefore we send len+1 bytes.
         std::cout << "Sent " << len+1 << " bytes to server" << std::endl;
 
  
@@ -56,4 +81,5 @@ int main (int argc, char *argv[]) {
         }
     }
     return 0;
+     */
 }
