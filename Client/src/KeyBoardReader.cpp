@@ -156,6 +156,7 @@ void KeyBoardReader::run() {
     }
 }
 
+//This class is used to convert data from Integer to Short
 void KeyBoardReader::shortToBytes(short num, char* bytesArray) {
     bytesArray[0] = ((num >> 8) & 0xFF);
     bytesArray[1] = (num & 0xFF);

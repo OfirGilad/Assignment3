@@ -2,6 +2,7 @@ package bgu.spl.net.srv;
 
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Passive object representing the Database where all courses and users are stored.
@@ -13,8 +14,8 @@ import java.util.*;
  */
 public class Database {
 
-	private final HashMap<String,UserType> users;
-	private HashMap<Integer, Course> courses;
+	private final ConcurrentHashMap<String,UserType> users;
+	private ConcurrentHashMap<Integer, Course> courses;
 
 	private static class SingletonHolder {
 		private static final Database getInstance = new Database();
@@ -23,8 +24,8 @@ public class Database {
 	//to prevent user from creating new Database
 	private Database() {
 		// TODO: implement
-		users = new HashMap<>();
-		courses = new HashMap<>();
+		users = new ConcurrentHashMap<>();
+		courses = new ConcurrentHashMap<>();
 	}
 
 	/**

@@ -19,24 +19,6 @@ void ConnectionReader::run() {
         short opCode = bytesToShort(opCodeArray);
         string outPut;
 
-        //if (opCode==9){
-
-        //    outPut="NOTIFICATION";
-        //    char * temp = new char[1];
-         //   connectionHandler->getBytes(temp, 1);
-         //   if (temp[0]==0)
-         //       outPut= outPut+ " PM";
-         //   else
-          //      outPut= outPut+ " PUBLIC";
-         //   string postingUser = "";
-         //   connectionHandler->getLine(postingUser);
-          //  outPut= outPut +" "+(postingUser.substr(0, (postingUser.size()-1)));
-          //  string content = "";
-         //   connectionHandler->getLine(content);
-         //   outPut= outPut+ " " + (content.substr(0, (content.size()-1)));
-        //   delete[] temp;
-        //}
-
         //TODO: update code
         if (opCode==12){
 
@@ -95,6 +77,7 @@ void ConnectionReader::run() {
     }
 }
 
+//This class is used to convert data from Integer to Short
 short ConnectionReader::bytesToShort(char* bytesArray) {
     short result = (short)((bytesArray[0] & 0xff) << 8);
     result += (short)(bytesArray[1] & 0xff);
