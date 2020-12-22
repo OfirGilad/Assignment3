@@ -13,9 +13,8 @@ using namespace std;
 KeyBoardReader::KeyBoardReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate): connectionHandler(connectionHandler), toLogout(toLogout), toTerminate(toTerminate)  {}
 
 void KeyBoardReader::run() {
-    *toLogout=false;
-    *toTerminate=false;
-
+    *toLogout = false;
+    *toTerminate = false;
 
     while (!(*toTerminate)) {
         bool isOut = false;
@@ -111,8 +110,7 @@ void KeyBoardReader::run() {
     }
 }
 
-void KeyBoardReader::shortToBytes(short num, char* bytesArry)
-{
-    bytesArry[0] = ((num >> 8) & 0xFF);
-    bytesArry[1] = (num & 0xFF);
+void KeyBoardReader::shortToBytes(short num, char* bytesArray) {
+    bytesArray[0] = ((num >> 8) & 0xFF);
+    bytesArray[1] = (num & 0xFF);
 }

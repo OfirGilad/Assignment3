@@ -2,15 +2,15 @@
 // Created by spl211 on 22/12/2020.
 //
 
-#ifndef SPL_NET_KEYBOARDREADER_H
-#define SPL_NET_KEYBOARDREADER_H
+#ifndef SPL_NET_CONNECTIONREADER_H
+#define SPL_NET_CONNECTIONREADER_H
 
 sing namespace std;
 
-class KeyBoardReader {
+class ConnectionReader {
 
 public:
-    KeyBoardReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate);
+    ConnectionReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate);
 
     void run();
     void shortToBytes(short num, char* bytesArray);
@@ -20,4 +20,4 @@ private:
     bool* toTerminate;
 };
 
-#endif //SPL_NET_KEYBOARDREADER_H
+#endif //SPL_NET_CONNECTIONREADER_H
