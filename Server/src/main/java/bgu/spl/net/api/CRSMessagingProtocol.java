@@ -2,18 +2,13 @@ package bgu.spl.net.api;
 
 import bgu.spl.net.srv.Database;
 
-public class CRSMessagingProtocol implements CRSMessagingProtocolInterface <String>{
+public class CRSMessagingProtocol implements MessagingProtocol <String>{
 
     private final Database database;
-    private String username;
     private boolean shouldTerminate = false;
 
     public CRSMessagingProtocol (Database database) {
         this.database = database;
-    }
-
-    public void start(String username) {
-        this.username = username;
     }
 
     public String process(String msg) {
