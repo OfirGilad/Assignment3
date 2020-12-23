@@ -15,8 +15,8 @@ void KeyBoardReader::run() {
 
     while (!(*toTerminate)) {
         bool isOut = false;
-        while (*toLogout == true) {
-            if (*toTerminate == true) {
+        while (*toLogout) {
+            if (*toTerminate) {
                 isOut = true;
                 break;
             }
