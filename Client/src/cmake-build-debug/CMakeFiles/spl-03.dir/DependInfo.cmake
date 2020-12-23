@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/spl211/IdeaProjects/Assignment3/Client/src/CRSClient.cpp" "/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles/spl-03.dir/CRSClient.cpp.o"
+  "/home/spl211/IdeaProjects/Assignment3/Client/src/echoClient.cpp" "/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles/spl-03.dir/echoClient.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

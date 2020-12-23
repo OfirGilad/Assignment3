@@ -77,27 +77,27 @@ include CMakeFiles/spl-03.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/spl-03.dir/flags.make
 
-CMakeFiles/spl-03.dir/CRSClient.cpp.o: CMakeFiles/spl-03.dir/flags.make
-CMakeFiles/spl-03.dir/CRSClient.cpp.o: ../CRSClient.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/spl-03.dir/CRSClient.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spl-03.dir/CRSClient.cpp.o -c /home/spl211/IdeaProjects/Assignment3/Client/src/CRSClient.cpp
+CMakeFiles/spl-03.dir/echoClient.cpp.o: CMakeFiles/spl-03.dir/flags.make
+CMakeFiles/spl-03.dir/echoClient.cpp.o: ../echoClient.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/spl-03.dir/echoClient.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spl-03.dir/echoClient.cpp.o -c /home/spl211/IdeaProjects/Assignment3/Client/src/echoClient.cpp
 
-CMakeFiles/spl-03.dir/CRSClient.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spl-03.dir/CRSClient.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/spl211/IdeaProjects/Assignment3/Client/src/CRSClient.cpp > CMakeFiles/spl-03.dir/CRSClient.cpp.i
+CMakeFiles/spl-03.dir/echoClient.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spl-03.dir/echoClient.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/spl211/IdeaProjects/Assignment3/Client/src/echoClient.cpp > CMakeFiles/spl-03.dir/echoClient.cpp.i
 
-CMakeFiles/spl-03.dir/CRSClient.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spl-03.dir/CRSClient.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/spl211/IdeaProjects/Assignment3/Client/src/CRSClient.cpp -o CMakeFiles/spl-03.dir/CRSClient.cpp.s
+CMakeFiles/spl-03.dir/echoClient.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spl-03.dir/echoClient.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/spl211/IdeaProjects/Assignment3/Client/src/echoClient.cpp -o CMakeFiles/spl-03.dir/echoClient.cpp.s
 
 # Object files for target spl-03
 spl__03_OBJECTS = \
-"CMakeFiles/spl-03.dir/CRSClient.cpp.o"
+"CMakeFiles/spl-03.dir/echoClient.cpp.o"
 
 # External object files for target spl-03
 spl__03_EXTERNAL_OBJECTS =
 
-spl-03: CMakeFiles/spl-03.dir/CRSClient.cpp.o
+spl-03: CMakeFiles/spl-03.dir/echoClient.cpp.o
 spl-03: CMakeFiles/spl-03.dir/build.make
 spl-03: CMakeFiles/spl-03.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable spl-03"

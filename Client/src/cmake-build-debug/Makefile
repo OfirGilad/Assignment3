@@ -143,32 +143,32 @@ spl-03/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/build
 .PHONY : spl-03/fast
 
-CRSClient.o: CRSClient.cpp.o
+echoClient.o: echoClient.cpp.o
 
-.PHONY : CRSClient.o
+.PHONY : echoClient.o
 
 # target to build an object file
-CRSClient.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/CRSClient.cpp.o
-.PHONY : CRSClient.cpp.o
+echoClient.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/echoClient.cpp.o
+.PHONY : echoClient.cpp.o
 
-CRSClient.i: CRSClient.cpp.i
+echoClient.i: echoClient.cpp.i
 
-.PHONY : CRSClient.i
+.PHONY : echoClient.i
 
 # target to preprocess a source file
-CRSClient.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/CRSClient.cpp.i
-.PHONY : CRSClient.cpp.i
+echoClient.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/echoClient.cpp.i
+.PHONY : echoClient.cpp.i
 
-CRSClient.s: CRSClient.cpp.s
+echoClient.s: echoClient.cpp.s
 
-.PHONY : CRSClient.s
+.PHONY : echoClient.s
 
 # target to generate assembly for a file
-CRSClient.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/CRSClient.cpp.s
-.PHONY : CRSClient.cpp.s
+echoClient.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/echoClient.cpp.s
+.PHONY : echoClient.cpp.s
 
 # Help Target
 help:
@@ -179,9 +179,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... spl-03"
-	@echo "... CRSClient.o"
-	@echo "... CRSClient.i"
-	@echo "... CRSClient.s"
+	@echo "... echoClient.o"
+	@echo "... echoClient.i"
+	@echo "... echoClient.s"
 .PHONY : help
 
 
