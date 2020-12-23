@@ -42,7 +42,7 @@ int main (int argc, char *argv[]) {
 
     return 0;
 
-    /*
+
 	//From here we will see the rest of the echo client implementation:
     while (1) {
         const short bufsize = 1024;
@@ -81,5 +81,5 @@ int main (int argc, char *argv[]) {
         }
     }
     return 0;
-     */
+     
 }

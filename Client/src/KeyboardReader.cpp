@@ -24,10 +24,11 @@ void KeyBoardReader::run() {
         if (isOut)
             break;
 
-        const short bufSize = 1024;
-        char buf[bufSize];
-        cin.getline(buf, bufSize);
-        string line(buf);
+        const short bufsize = 1024;
+        char buf[bufsize];
+        std::cin.getline(buf, bufsize);
+        std::string line(buf);
+        int len=line.length();
 
         int length = line.length();
         vector <string> onScreenText;
