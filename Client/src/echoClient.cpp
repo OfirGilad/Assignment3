@@ -57,7 +57,7 @@ int main (int argc, char *argv[]) {
 		// connectionHandler.sendLine(line) appends '\n' to the message. Therefore we send len+1 bytes.
         std::cout << "Sent " << len+1 << " bytes to server" << std::endl;
 
- 
+
         // We can use one of three options to read data from the server:
         // 1. Read a fixed number of characters
         // 2. Read a line (up to the newline character using the getline() buffered reader
@@ -69,7 +69,7 @@ int main (int argc, char *argv[]) {
             std::cout << "Disconnected. Exiting...\n" << std::endl;
             break;
         }
-        
+
 		len=answer.length();
 		// A C string must end with a 0 char delimiter.  When we filled the answer buffer from the socket
 		// we filled up to the \n char - we must make sure now that a 0 char is also present. So we truncate last character.
@@ -81,5 +81,5 @@ int main (int argc, char *argv[]) {
         }
     }
     return 0;
-     
+
 }

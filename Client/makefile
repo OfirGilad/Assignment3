@@ -12,7 +12,7 @@ bin/connectionHandler.o: src/connectionHandler.cpp
 bin/ConnectionReader.o: src/ConnectionReader.cpp
 	g++ $(CFLAGS) -o bin/ConnectionReader.o src/ConnectionReader.cpp
 
-bin/CRSClient.o: src/CRSClient.cpp
+bin/CRSClient.o: src/echoClient.cpp
 	g++ $(CFLAGS) -o bin/CRSClient.o src/CRSClient.cpp
 
 bin/KeyBoardReader.o: src/KeyBoardReader.cpp

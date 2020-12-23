@@ -71,7 +71,6 @@ void ConnectionReader::run() {
             cout << outPut << endl;
 
         delete[] opCodeArray;
-
     }
 }
 

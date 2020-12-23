@@ -26,11 +26,8 @@ void KeyBoardReader::run() {
 
         const short bufsize = 1024;
         char buf[bufsize];
-        std::cin.getline(buf, bufsize);
-        std::string line(buf);
-        int len=line.length();
-
-        int length = line.length();
+        cin.getline(buf, bufsize);
+        string line(buf);
         vector <string> onScreenText;
 
         boost::split(onScreenText, line, boost::is_any_of(" "));
@@ -41,9 +38,7 @@ void KeyBoardReader::run() {
             shortToBytes(1, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
-            connectionHandler->sendBytes(0, 1);
             connectionHandler->sendLine(onScreenText[2]);
-            connectionHandler->sendBytes(0, 1);
 
         }
 
@@ -51,18 +46,14 @@ void KeyBoardReader::run() {
             shortToBytes(2, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
-            connectionHandler->sendBytes(0, 1);
             connectionHandler->sendLine(onScreenText[2]);
-            connectionHandler->sendBytes(0, 1);
         }
 
         if (onScreenText[0] == "LOGIN") {
             shortToBytes(3, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
-            connectionHandler->sendBytes(0, 1);
             connectionHandler->sendLine(onScreenText[2]);
-            connectionHandler->sendBytes(0, 1);
         }
 
         if (onScreenText[0] == "LOGOUT") {
@@ -117,7 +108,6 @@ void KeyBoardReader::run() {
             shortToBytes(8, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
-            connectionHandler->sendBytes(0, 1);
         }
 
         if (onScreenText[0] == "ISREGISTERED") {

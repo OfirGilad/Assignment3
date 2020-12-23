@@ -10,4 +10,4 @@ set(SOURCE_FILES
 
 
 # add the executable
-add_executable(spl-03 CRSClient.cpp)
+add_executable(spl-03 echoClient.cpp)
