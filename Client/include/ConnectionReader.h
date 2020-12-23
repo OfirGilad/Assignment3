@@ -5,7 +5,7 @@
 #ifndef SPL_NET_CONNECTIONREADER_H
 #define SPL_NET_CONNECTIONREADER_H
 
-sing namespace std;
+using namespace std;
 
 class ConnectionReader {
 

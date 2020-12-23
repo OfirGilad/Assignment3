@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/spl211/IdeaProjects/Assignment3/Client/include/ConnectionReader.h
+
+/home/spl211/IdeaProjects/Assignment3/Client/include/KeyboardReader.h
+
+/home/spl211/IdeaProjects/Assignment3/Client/include/connectionHandler.h
+string
+-
+iostream
+-
+boost/asio.hpp
+-
+
+/home/spl211/IdeaProjects/Assignment3/Client/src/CRSClient.cpp
+stdlib.h
+-
+../include/connectionHandler.h
+/home/spl211/IdeaProjects/Assignment3/Client/include/connectionHandler.h
+../include/ConnectionReader.h
+/home/spl211/IdeaProjects/Assignment3/Client/include/ConnectionReader.h
+../include/KeyboardReader.h
+/home/spl211/IdeaProjects/Assignment3/Client/include/KeyboardReader.h
+thread
+-
+

@@ -5,7 +5,7 @@
 #ifndef SPL_NET_KEYBOARDREADER_H
 #define SPL_NET_KEYBOARDREADER_H
 
-sing namespace std;
+using namespace std;
 
 class KeyBoardReader {
 
