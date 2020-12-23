@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/spl-03.dir/CRSClient.cpp.o  -o spl-03 
