@@ -20,11 +20,24 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <String> 
     }
 
     public String decodeNextByte(byte nextByte) {
+        if (nextByte=='\0'){
+            zerosIndex[numberOfZeroCounter]=messageLength;
+            numberOfZeroCounter++;
+        }
+
+        if (numberOfZeroCounter == numberOfZerosNeeded) {
+            //return createAMessage();
+        }
+        //pushByte(nextByte);
+        if (opCode==3 || opCode==7)
+            //return createAMessage();
+        return null; //not a line yet
         return null;
     }
 
     @Override
     public byte[] encode(String message) {
+        //return ((ServerToClientMsg)message).getByteMsg();
         return null;
     }
 }

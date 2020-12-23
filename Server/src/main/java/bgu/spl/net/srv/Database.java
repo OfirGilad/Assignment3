@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Database {
 
-	private final ConcurrentHashMap<String,UserType> users;
+	private final ConcurrentHashMap<String, UserType> users;
 	private ConcurrentHashMap<Integer, Course> courses;
 
 	private static class SingletonHolder {
