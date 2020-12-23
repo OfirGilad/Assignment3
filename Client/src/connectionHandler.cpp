@@ -1,4 +1,6 @@
 #include "../include/connectionHandler.h"
+#include "../include/ConnectionReader.h"
+#include "../include/KeyboardReader.h"
  
 using boost::asio::ip::tcp;
 

@@ -1,9 +1,7 @@
-//
-// Created by spl211 on 22/12/2020.
-//
-
 #include <stdlib.h>
+#include "../include/connectionHandler.h"
 #include "../include/ConnectionReader.h"
+#include "../include/KeyboardReader.h"
 
 using namespace std;
 
