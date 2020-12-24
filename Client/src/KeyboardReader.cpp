@@ -32,26 +32,27 @@ void KeyBoardReader::run() {
         boost::split(onScreenText, line, boost::is_any_of(" "));
 
         char dataToBytes[2];
+        string temp;
 
         if (onScreenText[0] == "ADMINREG") {
             shortToBytes(1, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
-            connectionHandler->sendLine(onScreenText[1]);
-            connectionHandler->sendLine(onScreenText[2]);
+            temp = onScreenText[1] + " " + onScreenText[2] + " ";
+            connectionHandler->sendLine(temp);
         }
 
         if (onScreenText[0] == "STUDENTREG") {
             shortToBytes(2, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
-            connectionHandler->sendLine(onScreenText[1]);
-            connectionHandler->sendLine(onScreenText[2]);
+            temp = onScreenText[1] + " " + onScreenText[2] + " ";
+            connectionHandler->sendLine(temp);
         }
 
         if (onScreenText[0] == "LOGIN") {
             shortToBytes(3, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
-            connectionHandler->sendLine(onScreenText[1]);
-            connectionHandler->sendLine(onScreenText[2]);
+            temp = onScreenText[1] + " " + onScreenText[2] + " ";
+            connectionHandler->sendLine(temp);
         }
 
         if (onScreenText[0] == "LOGOUT") {

@@ -115,7 +115,16 @@ public class Database {
 	public String KdamCheck(int courseNumber) {
 		if (courses.containsKey(courseNumber)) {
 			Course course = courses.get(courseNumber);
-			return course.getKdamCoursesList().toString();
+			int[] kdamCourses = course.getKdamCoursesList();
+			StringBuilder kdamCoursesString = new StringBuilder("[");
+			for (int i = 0; i < kdamCourses.length; i ++) {
+				kdamCoursesString.append(kdamCourses[i]);
+				if (i + 1 != kdamCourses.length) {
+					kdamCoursesString.append(",");
+				}
+			}
+			kdamCoursesString.append("]");
+			return kdamCoursesString.toString();
 		}
 		else  {
 			return "false";
@@ -144,7 +153,7 @@ public class Database {
 				Map.Entry mapEntry = (Map.Entry)courseIterator.next();
 				studentRegistered.append(mapEntry.getKey());
 				if (courseIterator.hasNext()) {
-					studentRegistered.append(", ");
+					studentRegistered.append(",");
 				}
 			}
 			studentRegistered.append("]");
@@ -167,7 +176,7 @@ public class Database {
 					Map.Entry mapEntry = (Map.Entry) coursesIterator.next();
 					coursesRegistered.append(mapEntry.getKey());
 					if (coursesIterator.hasNext()) {
-						coursesRegistered.append(", ");
+						coursesRegistered.append(",");
 					}
 				}
 				coursesRegistered.append("]");

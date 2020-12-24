@@ -76,10 +76,10 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
         if (opCode == 1) {
             booleanResult = database.registerUser(username, password, "Admin");
             if (booleanResult) {
-                outPutMessage += "12 1" + '\n';
+                outPutMessage += "12 1";
             }
             else {
-                outPutMessage += "13 1" + '\n';
+                outPutMessage += "13 1";
             }
         }
 
@@ -87,10 +87,10 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
         if (opCode == 2) {
             booleanResult = database.registerUser(username, password, "User");
             if (booleanResult) {
-                outPutMessage += "12 2" + '\n';
+                outPutMessage += "12 2";
             }
             else {
-                outPutMessage += "13 2" + '\n';
+                outPutMessage += "13 2";
             }
         }
 
@@ -100,10 +100,10 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
             if (booleanResult && !isLoggedIn) {
                 isLoggedIn = true;
                 userType = database.userType(username);
-                outPutMessage += "12 3" + '\n';
+                outPutMessage += "12 3";
             }
             else {
-                outPutMessage += "13 3" + '\n';
+                outPutMessage += "13 3";
             }
         }
 
@@ -111,10 +111,10 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
         if (opCode == 4) {
             if (isLoggedIn) {
                 isLoggedIn = false;
-                outPutMessage += "12 4" + '\n';
+                outPutMessage += "12 4";
             }
             else {
-                outPutMessage += "13 4" + '\n';
+                outPutMessage += "13 4";
             }
         }
 
@@ -122,10 +122,10 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
         if (opCode == 5) {
             booleanResult = database.registerToCourse(username, courseNum);
             if (booleanResult) {
-                outPutMessage += "12 5" + '\n';
+                outPutMessage += "12 5";
             }
             else {
-                outPutMessage += "13 5" + '\n';
+                outPutMessage += "13 5";
             }
         }
 
@@ -133,11 +133,11 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
         if (opCode == 6) {
             stringResult = database.KdamCheck(courseNum);
             if (!stringResult.equals("false")) {
-                outPutMessage += "12 6"+'\n';
+                outPutMessage += "12 6 ";
                 outPutMessage += stringResult; //Contains Kdam Courses List
             }
             else {
-                outPutMessage += "13 6" + '\n';
+                outPutMessage += "13 6";
             }
         }
 
@@ -146,16 +146,16 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
             if (userType.equals("Admin")) {
                 booleanResult = database.checkIfCourseExists(courseNum);
                 if (booleanResult) {
-                    outPutMessage += "12 7" + '\n';
-                    outPutMessage += database.courseStatsSeatsAvailable(courseNum) + '\n';
-                    outPutMessage += database.courseStatsSeatsAvailable(courseNum) + '\n';
+                    outPutMessage += "12 7 ";
+                    outPutMessage += database.courseStatsSeatsAvailable(courseNum) + " ";
+                    outPutMessage += database.courseStatsSeatsAvailable(courseNum);
                 }
                 else {
-                    outPutMessage += "13 7" + '\n';
+                    outPutMessage += "13 7";
                 }
             }
             else {
-                outPutMessage += "13 7" + '\n';
+                outPutMessage += "13 7";
             }
         }
 
@@ -164,26 +164,26 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
             if (isLoggedIn && userType.equals("Admin")) {
                 booleanResult = database.checkIfStudentExists(studentUsername);
                 if (booleanResult) {
-                    outPutMessage += "12 8" + '\n';
-                    outPutMessage += database.studentStats(studentUsername) + '\n';
+                    outPutMessage += "12 8 ";
+                    outPutMessage += database.studentStats(studentUsername);
                 }
                 else {
-                    outPutMessage += "13 8" + '\n';
+                    outPutMessage += "13 8";
                 }
             }
             else {
-                outPutMessage += "13 8" + '\n';
+                outPutMessage += "13 8";
             }
         }
 
         //ISREGISTER
         if (opCode == 9) {
             if (isLoggedIn && userType.equals("Student") & database.checkIfCourseExists(courseNum)) {
-                outPutMessage += "12 9" + '\n';
-                outPutMessage += database.isRegistered(username, courseNum) + '\n';
+                outPutMessage += "12 9 ";
+                outPutMessage += database.isRegistered(username, courseNum);
             }
             else {
-                outPutMessage += "13 9" + '\n';
+                outPutMessage += "13 9";
             }
         }
 
@@ -192,22 +192,22 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
             if (isLoggedIn && userType.equals("Student") & database.checkIfCourseExists(courseNum)) {
                 booleanResult = database.unregisterToCourse(username, courseNum);
                 if (booleanResult) {
-                    outPutMessage += "12 10" + '\n';
+                    outPutMessage += "12 10";
                 }
             }
             else {
-                outPutMessage += "13 10" + '\n';
+                outPutMessage += "13 10";
             }
         }
 
         //MYCOURSES
         if (opCode == 11) {
             if (isLoggedIn && userType.equals("Student")) {
-                outPutMessage += "12 11" + '\n';
-                outPutMessage += database.studentStats(username) + '\n';
+                outPutMessage += "12 11 ";
+                outPutMessage += database.studentStats(username);
             }
             else {
-                outPutMessage += "13 11" + '\n';
+                outPutMessage += "13 11";
             }
         }
 
