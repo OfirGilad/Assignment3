@@ -24,31 +24,28 @@ void ConnectionReader::run() {
             connectionHandler->getBytes(opCodeArray, 2);
             short msgOpCode = bytesToShort(opCodeArray);
             outPut = outPut + " " + to_string(msgOpCode);
-
+            string msgData;
             //5-11
             if(msgOpCode == 6 | msgOpCode == 9 | msgOpCode == 11){
-                String msgData;
                 connectionHandler->getLine(msgData);
-                outPut= outPut + '\n' + to_string(msgData);
+                outPut= outPut + '\n' + msgData.substr(0, msgData.size()-1);
             }
 
             if (msgOpCode == 7) {
-                String msgData;
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Course: " + to_string(msgData);
+                outPut = outPut + '\n' + "Course: " + msgData.substr(0, msgData.size()-1);
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Seats Available: " + to_string(msgData);
+                outPut = outPut + '\n' + "Seats Available: " + msgData.substr(0, msgData.size()-1);
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Student Registered: " + to_string(msgData);
+                outPut = outPut + '\n' + "Student Registered: " + msgData.substr(0, msgData.size()-1);
 
             }
 
             if (msgOpCode == 8) {
-                String msgData;
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Student: " + to_string(msgData);
+                outPut = outPut + '\n' + "Student: " + msgData.substr(0, msgData.size()-1);
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Courses: " + to_string(msgData);
+                outPut = outPut + '\n' + "Courses: " + msgData.substr(0, msgData.size()-1);
             }
 
             if(msgOpCode == 4){

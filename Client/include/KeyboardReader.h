@@ -1,9 +1,8 @@
-//
-// Created by spl211 on 22/12/2020.
-//
-
 #ifndef SPL_NET_KEYBOARDREADER_H
 #define SPL_NET_KEYBOARDREADER_H
+
+#include <string>
+#include <iostream>
 
 using namespace std;
 

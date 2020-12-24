@@ -7,8 +7,16 @@
 #IncludeRegexTransform: 
 
 /home/spl211/IdeaProjects/Assignment3/Client/include/ConnectionReader.h
+string
+-
+iostream
+-
 
 /home/spl211/IdeaProjects/Assignment3/Client/include/KeyboardReader.h
+string
+-
+iostream
+-
 
 /home/spl211/IdeaProjects/Assignment3/Client/include/connectionHandler.h
 string
@@ -18,7 +26,7 @@ iostream
 boost/asio.hpp
 -
 
-/home/spl211/IdeaProjects/Assignment3/Client/src/CRSClient.cpp
+/home/spl211/IdeaProjects/Assignment3/Client/src/echoClient.cpp
 stdlib.h
 -
 ../include/connectionHandler.h

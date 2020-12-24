@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "../include/connectionHandler.h"
 #include "../include/ConnectionReader.h"
 #include "../include/KeyboardReader.h"

@@ -1,7 +1,6 @@
-#include <stdlib.h>
 #include "../include/connectionHandler.h"
-#include "../include/ConnectionReader.h"
 #include "../include/KeyboardReader.h"
+#include "boost/lexical_cast.hpp"
 
 #include <boost/algorithm/string.hpp>
 
@@ -39,8 +38,6 @@ void KeyBoardReader::run() {
             connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
             connectionHandler->sendLine(onScreenText[2]);
-            char x = '\0';
-
         }
 
         if (onScreenText[0] == "STUDENTREG") {
@@ -59,7 +56,7 @@ void KeyBoardReader::run() {
 
         if (onScreenText[0] == "LOGOUT") {
             shortToBytes(4, dataToBytes);
-            connectionHandler->sendBytes(opCode, 2);
+            connectionHandler->sendBytes(dataToBytes, 2);
             *toLogout = true;
         }
 
@@ -67,12 +64,7 @@ void KeyBoardReader::run() {
             shortToBytes(5, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             short courseNum;
-            try {
-                courseNum = boost::lexical_cast<short>(onScreenText[1]);
-            }
-            catch(bad_lexical_cast &) {
-                //Do nothing
-            }
+            courseNum = boost::lexical_cast<short>(onScreenText[1]);
             shortToBytes(courseNum, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
         }
@@ -81,12 +73,7 @@ void KeyBoardReader::run() {
             shortToBytes(6, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             short courseNum;
-            try {
-                courseNum = boost::lexical_cast<short>(onScreenText[1]);
-            }
-            catch(bad_lexical_cast &) {
-                //Do nothing
-            }
+            courseNum = boost::lexical_cast<short>(onScreenText[1]);
             shortToBytes(courseNum, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
         }
@@ -95,12 +82,7 @@ void KeyBoardReader::run() {
             shortToBytes(7, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             short courseNum;
-            try {
-                courseNum = boost::lexical_cast<short>(onScreenText[1]);
-            }
-            catch(bad_lexical_cast &) {
-                //Do nothing
-            }
+            courseNum = boost::lexical_cast<short>(onScreenText[1]);
             shortToBytes(courseNum, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
         }
@@ -115,12 +97,7 @@ void KeyBoardReader::run() {
             shortToBytes(9, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             short courseNum;
-            try {
-                courseNum = boost::lexical_cast<short>(onScreenText[1]);
-            }
-            catch(bad_lexical_cast &) {
-                //Do nothing
-            }
+            courseNum = boost::lexical_cast<short>(onScreenText[1]);
             shortToBytes(courseNum, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
         }
@@ -129,12 +106,7 @@ void KeyBoardReader::run() {
             shortToBytes(10, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
             short courseNum;
-            try {
-                courseNum = boost::lexical_cast<short>(onScreenText[1]);
-            }
-            catch(bad_lexical_cast &) {
-                //Do nothing
-            }
+            courseNum = boost::lexical_cast<short>(onScreenText[1]);
             shortToBytes(courseNum, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
         }

@@ -7,9 +7,12 @@ public class CRSServer {
     public static void main(String[] args)
     {
         //Get port
-        int port = Integer.parseInt(args[0]);
-        String type = args[1];
+        //int port = Integer.parseInt(args[0]);
+        //String type = args[1];
         Database serverDatabase = Database.getInstance();
+
+        int port = 7777;
+        String type = "tcp";
 
         if(type.equals("tpc"))
         {

@@ -143,6 +143,87 @@ spl-03/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/build
 .PHONY : spl-03/fast
 
+ConnectionReader.o: ConnectionReader.cpp.o
+
+.PHONY : ConnectionReader.o
+
+# target to build an object file
+ConnectionReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/ConnectionReader.cpp.o
+.PHONY : ConnectionReader.cpp.o
+
+ConnectionReader.i: ConnectionReader.cpp.i
+
+.PHONY : ConnectionReader.i
+
+# target to preprocess a source file
+ConnectionReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/ConnectionReader.cpp.i
+.PHONY : ConnectionReader.cpp.i
+
+ConnectionReader.s: ConnectionReader.cpp.s
+
+.PHONY : ConnectionReader.s
+
+# target to generate assembly for a file
+ConnectionReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/ConnectionReader.cpp.s
+.PHONY : ConnectionReader.cpp.s
+
+KeyboardReader.o: KeyboardReader.cpp.o
+
+.PHONY : KeyboardReader.o
+
+# target to build an object file
+KeyboardReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/KeyboardReader.cpp.o
+.PHONY : KeyboardReader.cpp.o
+
+KeyboardReader.i: KeyboardReader.cpp.i
+
+.PHONY : KeyboardReader.i
+
+# target to preprocess a source file
+KeyboardReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/KeyboardReader.cpp.i
+.PHONY : KeyboardReader.cpp.i
+
+KeyboardReader.s: KeyboardReader.cpp.s
+
+.PHONY : KeyboardReader.s
+
+# target to generate assembly for a file
+KeyboardReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/KeyboardReader.cpp.s
+.PHONY : KeyboardReader.cpp.s
+
+connectionHandler.o: connectionHandler.cpp.o
+
+.PHONY : connectionHandler.o
+
+# target to build an object file
+connectionHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/connectionHandler.cpp.o
+.PHONY : connectionHandler.cpp.o
+
+connectionHandler.i: connectionHandler.cpp.i
+
+.PHONY : connectionHandler.i
+
+# target to preprocess a source file
+connectionHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/connectionHandler.cpp.i
+.PHONY : connectionHandler.cpp.i
+
+connectionHandler.s: connectionHandler.cpp.s
+
+.PHONY : connectionHandler.s
+
+# target to generate assembly for a file
+connectionHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/connectionHandler.cpp.s
+.PHONY : connectionHandler.cpp.s
+
 echoClient.o: echoClient.cpp.o
 
 .PHONY : echoClient.o
@@ -179,6 +260,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... spl-03"
+	@echo "... ConnectionReader.o"
+	@echo "... ConnectionReader.i"
+	@echo "... ConnectionReader.s"
+	@echo "... KeyboardReader.o"
+	@echo "... KeyboardReader.i"
+	@echo "... KeyboardReader.s"
+	@echo "... connectionHandler.o"
+	@echo "... connectionHandler.i"
+	@echo "... connectionHandler.s"
 	@echo "... echoClient.o"
 	@echo "... echoClient.i"
 	@echo "... echoClient.s"
