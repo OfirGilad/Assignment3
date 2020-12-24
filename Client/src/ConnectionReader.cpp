@@ -1,14 +1,11 @@
-#include <stdlib.h>
 #include "../include/connectionHandler.h"
 #include "../include/ConnectionReader.h"
-#include "../include/KeyboardReader.h"
 
 using namespace std;
 
-ConnectionReader::ConnectionReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate): connectionHandler(connectionHandler), toLogout(toLogout), toTerminate(toTerminate)  {}
+ConnectionReader::ConnectionReader(ConnectionHandler* connectionHandler, bool* toTerminate): connectionHandler(connectionHandler), toTerminate(toTerminate)  {}
 
 void ConnectionReader::run() {
-    *toLogout = false;
     *toTerminate = false;
 
     while (!(*toTerminate)) {
@@ -25,27 +22,27 @@ void ConnectionReader::run() {
             short msgOpCode = bytesToShort(opCodeArray);
             outPut = outPut + " " + to_string(msgOpCode);
             string msgData;
-            //5-11
+
             if(msgOpCode == 6 | msgOpCode == 9 | msgOpCode == 11){
                 connectionHandler->getLine(msgData);
-                outPut= outPut + '\n' + msgData.substr(0, msgData.size()-1);
+                outPut= outPut + '\n' + msgData;
             }
 
             if (msgOpCode == 7) {
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Course: " + msgData.substr(0, msgData.size()-1);
+                outPut = outPut + '\n' + "Course:" + msgData;
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Seats Available: " + msgData.substr(0, msgData.size()-1);
+                outPut = outPut + '\n' + "Seats Available:" + msgData;
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Student Registered: " + msgData.substr(0, msgData.size()-1);
+                outPut = outPut + '\n' + "Student Registered:" + msgData;
 
             }
 
             if (msgOpCode == 8) {
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Student: " + msgData.substr(0, msgData.size()-1);
+                outPut = outPut + '\n' + "Student:" + msgData;
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Courses: " + msgData.substr(0, msgData.size()-1);
+                outPut = outPut + '\n' + "Courses:" + msgData;
             }
 
             if(msgOpCode == 4){
@@ -57,12 +54,8 @@ void ConnectionReader::run() {
             outPut="ERROR";
 
             connectionHandler->getBytes(opCodeArray, 2);
-            short errorCheck = bytesToShort(opCodeArray);
-            outPut = outPut + " " + to_string(errorCheck);
-
-            if (errorCheck == 4){
-                *toLogout = false;
-            }
+            short errorCode = bytesToShort(opCodeArray);
+            outPut = outPut + " " + to_string(errorCode);
         }
         if (outPut != "")
             cout << outPut << endl;

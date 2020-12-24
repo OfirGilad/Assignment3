@@ -6,22 +6,12 @@
 
 using namespace std;
 
-KeyBoardReader::KeyBoardReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate): connectionHandler(connectionHandler), toLogout(toLogout), toTerminate(toTerminate)  {}
+KeyboardReader::KeyboardReader(ConnectionHandler* connectionHandler, bool* toTerminate): connectionHandler(connectionHandler), toTerminate(toTerminate)  {}
 
-void KeyBoardReader::run() {
-    *toLogout = false;
+void KeyboardReader::run() {
     *toTerminate = false;
 
     while (!(*toTerminate)) {
-        bool isOut = false;
-        while (*toLogout) {
-            if (*toTerminate) {
-                isOut = true;
-                break;
-            }
-        }
-        if (isOut)
-            break;
 
         const short bufsize = 1024;
         char buf[bufsize];
@@ -120,7 +110,7 @@ void KeyBoardReader::run() {
 }
 
 //This class is used to convert data from Short to Bytes
-void KeyBoardReader::shortToBytes(short num, char* bytesArray) {
+void KeyboardReader::shortToBytes(short num, char* bytesArray) {
     bytesArray[0] = ((num >> 8) & 0xFF);
     bytesArray[1] = (num & 0xFF);
 }

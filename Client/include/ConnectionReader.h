@@ -9,7 +9,7 @@ using namespace std;
 class ConnectionReader {
 
 public:
-    ConnectionReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate);
+    ConnectionReader(ConnectionHandler* connectionHandler, bool* toTerminate);
 
     void run();
     short bytesToShort(char* bytesArray);

@@ -27,20 +27,16 @@ int main (int argc, char *argv[]) {
     }
 
     bool *toTerminate = new bool;
-    bool *toLogout = new bool;
-
-    *toLogout = false;
     *toTerminate = false;
 
-    KeyBoardReader keyBoardReader(&connectionHandler,toLogout,toTerminate);
-    ConnectionReader connectionReader(&connectionHandler,toLogout,toTerminate);
+    KeyBoardReader keyBoardReader(&connectionHandler,toTerminate);
+    ConnectionReader connectionReader(&connectionHandler,toTerminate);
     thread connectionThread(&ConnectionReader::run, &connectionReader);
     thread keyBoardThread(&KeyBoardReader::run, &keyBoardReader);
     connectionThread.join();
     keyBoardThread.join();
 
     delete toTerminate;
-    delete toLogout;
 
     return 0;
 

@@ -6,10 +6,10 @@
 
 using namespace std;
 
-class KeyBoardReader {
+class KeyboardReader {
 
 public:
-    KeyBoardReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate);
+    KeyboardReader(ConnectionHandler* connectionHandler, bool* toTerminate);
 
     void run();
     void shortToBytes(short num, char* bytesArray);
