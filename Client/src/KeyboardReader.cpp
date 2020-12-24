@@ -39,6 +39,7 @@ void KeyBoardReader::run() {
             connectionHandler->sendBytes(dataToBytes, 2);
             connectionHandler->sendLine(onScreenText[1]);
             connectionHandler->sendLine(onScreenText[2]);
+            char x = '\0';
 
         }
 

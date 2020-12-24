@@ -46,35 +46,41 @@ class Student extends UserType {
         return courses;
     }
 
-    public String registerToCourse(Course course) {
+    public boolean registerToCourse(Course course) {
         if (!courses.containsValue(course)) {
             if (!course.isFull()) {
                 if (!course.isEligible(courses)) {
                     course.registerStudent(this);
                     courses.put(course.getCourseNum(), course);
-                    return "User registered successfully";
+                    //"User registered successfully"
+                    return true;
                 }
                 else {
-                    return "User isn't meet the Kdam curses requirement";
+                    //"User isn't meet the Kdam curses requirement"
+                    return false;
                 }
             }
             else {
-                return "Course is full";
+                //"Course is full"
+                return false;
             }
         }
         else {
-            return "User is already registered";
+            //"User is already registered"
+            return false;
         }
     }
 
-    public String unregisterToCourse(Course course) {
+    public boolean unregisterToCourse(Course course) {
         if (courses.containsValue(course)) {
             course.unregisterStudent(this);
             courses.remove(course.getCourseNum(), course);
-            return "User unregistered successfully";
+            //"User unregistered successfully"
+            return true;
         }
         else {
-            return "User is already unregistered";
+            //"User is already unregistered"
+            return false;
         }
     }
 

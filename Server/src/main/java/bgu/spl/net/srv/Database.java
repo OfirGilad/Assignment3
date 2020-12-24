@@ -45,6 +45,18 @@ public class Database {
 		return false;
 	}
 
+	public String userType(String username) {
+		return users.get(username).getClass().toString();
+	}
+
+	public boolean checkIfCourseExists(int courseNumber) {
+		return courses.containsKey(courseNumber);
+	}
+
+	public boolean checkIfStudentExists(String userName) {
+		return users.containsKey(userName);
+	}
+
 	//Used for: ADMINREG, STUDENTREG
 	public boolean registerUser(String username, String password, String userType) {
 		if (users.containsKey(username)) {
@@ -81,7 +93,7 @@ public class Database {
 	}
 
 	//Used for: COURSEREG
-	public String registerToCourse(String username, int courseNumber) {
+	public boolean registerToCourse(String username, int courseNumber) {
 		UserType user = users.get(username);
 		if (user.getClass() != Admin.class) {
 			if (courses.containsKey(courseNumber)) {
@@ -90,23 +102,23 @@ public class Database {
 			}
 			else {
 				//"Course number is not valid"
-				return "false";
+				return false;
 			}
 		}
 		else {
 			//"User is Admin"
-			return "false";
+			return false;
 		}
 	}
 
 	//Used for: KDAMCHECK
-	public int[] KdamCheck(int courseNumber) {
+	public String KdamCheck(int courseNumber) {
 		if (courses.containsKey(courseNumber)) {
 			Course course = courses.get(courseNumber);
-			return course.getKdamCoursesList();
+			return course.getKdamCoursesList().toString();
 		}
 		else  {
-			throw new IllegalArgumentException();
+			return "false";
 		}
 	}
 
@@ -117,7 +129,7 @@ public class Database {
 			return course.getCurrentNumberOfStudents() + "/" + course.getNumOfMaxStudent();
 		}
 		else  {
-			throw new IllegalArgumentException();
+			return null;
 		}
 	}
 
@@ -139,7 +151,7 @@ public class Database {
 			return studentRegistered.toString();
 		}
 		else  {
-			throw new IllegalArgumentException();
+			return null;
 		}
 	}
 
@@ -172,26 +184,26 @@ public class Database {
 	}
 
 	//used for: ISREGISTERED
-	public boolean isRegistered(String username, int courseNumber) {
+	public String isRegistered(String username, int courseNumber) {
 		UserType user = users.get(username);
 		if (user.getClass() != Admin.class) {
 			if (((Student)user).isRegisteredToCourse(courseNumber)) {
 				//"Student is registered"
-				return true;
+				return "REGISTERED";
 			}
 			else {
 				//"Student is not registered"
-				return false;
+				return "UNREGISTERED";
 			}
 		}
 		else {
 			//"User is Admin"
-			return false;
+			return "UNREGISTERED";
 		}
 	}
 
 	//used for: UNREGISTER
-	public String unregisterToCourse(String username, int courseNumber) {
+	public boolean unregisterToCourse(String username, int courseNumber) {
 		UserType user = users.get(username);
 		if (user.getClass() != Admin.class) {
 			if (courses.containsKey(courseNumber)) {
@@ -200,12 +212,12 @@ public class Database {
 			}
 			else  {
 				//"Course number is not valid"
-				return "false";
+				return false;
 			}
 		}
 		else {
 			//"User is Admin"
-			return "false";
+			return false;
 		}
 	}
 
