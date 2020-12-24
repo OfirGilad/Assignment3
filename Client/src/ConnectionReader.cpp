@@ -74,7 +74,7 @@ void ConnectionReader::run() {
     }
 }
 
-//This class is used to convert data from Integer to Short
+//This class is used to convert data from Bytes to Short
 short ConnectionReader::bytesToShort(char* bytesArray) {
     short result = (short)((bytesArray[0] & 0xff) << 8);
     result += (short)(bytesArray[1] & 0xff);

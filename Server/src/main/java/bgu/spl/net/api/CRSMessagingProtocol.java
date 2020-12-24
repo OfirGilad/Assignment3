@@ -2,7 +2,7 @@ package bgu.spl.net.api;
 
 import bgu.spl.net.srv.Database;
 
-public class CRSMessagingProtocol implements CRSMessagingProtocolInterface <String>{
+public class CRSMessagingProtocol implements CRSMessagingProtocolInterface<String> {
 
     private final Database database;
     private boolean shouldTerminate = false;
@@ -70,6 +70,41 @@ public class CRSMessagingProtocol implements CRSMessagingProtocolInterface <Stri
     }
 
     private String runCommand () {
+        boolean booleanResult;
+        String stringResult;
+
+        if (opCode == 1) {
+            booleanResult = database.registerUser(username, password, "Admin");
+            if (booleanResult) {
+                return "ACT 1";
+            }
+            else {
+                return "ERR 1";
+            }
+        }
+
+        if (opCode == 2) {
+            booleanResult = database.registerUser(username, password, "User");
+            if (booleanResult) {
+                return "ACT 2";
+            }
+            else {
+                return "ERR 2";
+            }
+        }
+
+        if (opCode == 3) {
+            booleanResult = database.checkLoginInfo(username, password);
+            if (booleanResult && !isLoggedIn) {
+                isLoggedIn = true;
+                return "ACT 3";
+            }
+            else {
+                return "ERR 3";
+            }
+        }
+
+
 
         isMessageReady = false;
         return "Ans";

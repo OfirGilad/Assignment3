@@ -46,31 +46,36 @@ public class Database {
 	}
 
 	//Used for: ADMINREG, STUDENTREG
-	public String registerUser(String username, String password, UserType user) {
+	public boolean registerUser(String username, String password, String userType) {
 		if (users.containsKey(username)) {
-			return "User is already registered";
+			//"User is already registered"
+			return false;
 		}
 		else {
-			if (user.getClass() == Admin.class)
+			if (userType.equals("Admin"))
 				users.put(username,new Admin(username, password));
 			else {
 				users.put(username,new Student(username, password));
 			}
-			return "User registered successfully";
+			//"User registered successfully"
+			return true;
 		}
 	}
 
 	//Used for: LOGIN
-	public String checkLoginInfo(String username, String password) {
+	public boolean checkLoginInfo(String username, String password) {
 		if (!users.containsKey(username)) {
-			return "User is not registered";
+			//"User is not registered";
+			return false;
 		}
 		else {
 			if (users.get(username).getPassword().equals(password)) {
-				return "User info is valid";
+				//"User info is valid"
+				return true;
 			}
 			else {
-				return "User password is incorrect";
+				//"User password is incorrect"
+				return false;
 			}
 		}
 	}
@@ -84,11 +89,13 @@ public class Database {
 				return ((Student)user).registerToCourse(course);
 			}
 			else {
-				return "Course number is not valid";
+				//"Course number is not valid"
+				return "false";
 			}
 		}
 		else {
-			return "User is Admin";
+			//"User is Admin"
+			return "false";
 		}
 	}
 
@@ -154,27 +161,32 @@ public class Database {
 				coursesRegistered.append("]");
 				return coursesRegistered.toString();
 			} else {
-				return "User is Admin";
+				//"User is Admin"
+				return "false";
 			}
 		}
 		else  {
-			return "User does not exist";
+			//"User does not exist"
+			return "false";
 		}
 	}
 
 	//used for: ISREGISTERED
-	public String isRegistered(String username, int courseNumber) {
+	public boolean isRegistered(String username, int courseNumber) {
 		UserType user = users.get(username);
 		if (user.getClass() != Admin.class) {
 			if (((Student)user).isRegisteredToCourse(courseNumber)) {
-				return "Student is registered";
+				//"Student is registered"
+				return true;
 			}
 			else {
-				return "Student is not registered";
+				//"Student is not registered"
+				return false;
 			}
 		}
 		else {
-			return "User is Admin";
+			//"User is Admin"
+			return false;
 		}
 	}
 
@@ -187,11 +199,13 @@ public class Database {
 				return ((Student) user).unregisterToCourse(course);
 			}
 			else  {
-				return "Course number is not valid";
+				//"Course number is not valid"
+				return "false";
 			}
 		}
 		else {
-			return "User is Admin";
+			//"User is Admin"
+			return "false";
 		}
 	}
 
