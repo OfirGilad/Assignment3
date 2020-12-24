@@ -1,7 +1,9 @@
-package bgu.spl.net.srv;
+package bgu.spl.net.impl.BGRSServer;
 
 import bgu.spl.net.api.CRSMessageEncoderDecoder;
 import bgu.spl.net.api.CRSMessagingProtocol;
+import bgu.spl.net.srv.Database;
+import bgu.spl.net.srv.Server;
 
 public class CRSServer {
     public static void main(String[] args)

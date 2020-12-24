@@ -16,6 +16,7 @@ public class Database {
 
 	private final ConcurrentHashMap<String, UserType> users;
 	private ConcurrentHashMap<Integer, Course> courses;
+	private final ConcurrentHashMap<String, UserType> loggedInUsers;
 
 	private static class SingletonHolder {
 		private static final Database getInstance = new Database();
@@ -26,6 +27,7 @@ public class Database {
 		// TODO: implement
 		users = new ConcurrentHashMap<>();
 		courses = new ConcurrentHashMap<>();
+		loggedInUsers = new ConcurrentHashMap<>();
 	}
 
 	/**
@@ -75,20 +77,28 @@ public class Database {
 	}
 
 	//Used for: LOGIN
-	public boolean checkLoginInfo(String username, String password) {
+	public boolean login(String username, String password) {
 		if (!users.containsKey(username)) {
 			//"User is not registered";
 			return false;
 		}
 		else {
 			if (users.get(username).getPassword().equals(password)) {
-				//"User info is valid"
-				return true;
+				//"true if user hasn't logged in yet, else false"
+				return !loggedInUsers.containsKey(username);
 			}
 			else {
 				//"User password is incorrect"
 				return false;
 			}
+		}
+	}
+
+	//Used for: LOGOUT
+	public void logout(String username) {
+		if (loggedInUsers.containsKey(username)) {
+			loggedInUsers.remove(username, users.get(username));
+			//"User logged out successfully"
 		}
 	}
 

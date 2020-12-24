@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include "../include/connectionHandler.h"
 #include "../include/ConnectionReader.h"
-#include "../include/KeyboardReader.h"
  
 using boost::asio::ip::tcp;
 
@@ -38,7 +37,7 @@ bool ConnectionHandler::getBytes(char bytes[], unsigned int bytesToRead) {
     size_t tmp = 0;
 	boost::system::error_code error;
     try {
-        while (!error && bytesToRead > tmp ) {
+        while (!error && bytesToRead > tmp) {
 			tmp += socket_.read_some(boost::asio::buffer(bytes+tmp, bytesToRead-tmp), error);			
         }
 		if(error)
@@ -54,7 +53,7 @@ bool ConnectionHandler::sendBytes(const char bytes[], int bytesToWrite) {
     int tmp = 0;
 	boost::system::error_code error;
     try {
-        while (!error && bytesToWrite > tmp ) {
+        while (!error && bytesToWrite > tmp) {
 			tmp += socket_.write_some(boost::asio::buffer(bytes + tmp, bytesToWrite - tmp), error);
         }
 		if(error)
@@ -67,11 +66,11 @@ bool ConnectionHandler::sendBytes(const char bytes[], int bytesToWrite) {
 }
  
 bool ConnectionHandler::getLine(std::string& line) {
-    return getFrameAscii(line, '\n');
+    return getFrameAscii(line, '\0');
 }
 
 bool ConnectionHandler::sendLine(std::string& line) {
-    return sendFrameAscii(line, '\n');
+    return sendFrameAscii(line, '\0');
 }
  
 
@@ -89,7 +88,7 @@ bool ConnectionHandler::getFrameAscii(std::string& frame, char delimiter) {
 			frame.append(1, ch);
 	}while (delimiter != ch);
     } catch (std::exception& e) {
-	std::cerr << "recv failed2 (Error: " << e.what() << ')' << std::endl;
+	std::cerr << "recv failed (Error: " << e.what() << ')' << std::endl;
 	return false;
     }
     return true;

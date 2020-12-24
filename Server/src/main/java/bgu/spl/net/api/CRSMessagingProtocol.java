@@ -96,7 +96,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
 
         //LOGIN
         if (opCode == 3) {
-            booleanResult = database.checkLoginInfo(username, password);
+            booleanResult = database.login(username, password);
             if (booleanResult && !isLoggedIn) {
                 isLoggedIn = true;
                 userType = database.userType(username);
@@ -111,6 +111,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
         if (opCode == 4) {
             if (isLoggedIn) {
                 isLoggedIn = false;
+                database.logout(username);
                 outPutMessage += "12 4";
             }
             else {
