@@ -1,6 +1,10 @@
 package bgu.spl.net.srv;
 
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -41,10 +45,33 @@ public class Database {
 	 * loads the courses from the file path specified
 	 * into the Database, returns true if successful.
 	 */
-	boolean initialize(String coursesFilePath) {
-		// TODO: implement
-		courses = null;
-		return false;
+	boolean initialize(String coursesFilePath) throws FileNotFoundException {
+		try(BufferedReader br = new BufferedReader(new FileReader("src/Courses.txt"))) {
+			for(String line; (line = br.readLine()) != null; ) {
+				String[] parts = line.split("\\|");
+
+				int courseNum = Integer.parseInt(parts[0]);
+				String courseName = parts[1];
+				int[] KdamCoursesList = get_kdam_list_from_string(parts[2]);
+				int numOfMaxStudent = Integer.parseInt(parts[3]);
+				courses.put(courseNum,new Course(courseNum,courseName,KdamCoursesList,numOfMaxStudent));
+			}
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
+
+	private int[] get_kdam_list_from_string(String kdam_str)
+	{
+		kdam_str = kdam_str.substring(1,kdam_str.length()-1);
+		String [] kdam_str_arr = kdam_str.split("\\,");
+		int [] kdam_int_arr = new int [kdam_str_arr.length];
+		for(int i=0;i<kdam_str_arr.length;i++)
+		{
+			kdam_int_arr[i] = Integer.parseInt(kdam_str_arr[i]);
+		}
+		return kdam_int_arr;
 	}
 
 	public String userType(String username) {
