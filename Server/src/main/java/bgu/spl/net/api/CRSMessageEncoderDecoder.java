@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message> {
-
     private byte[] bytes = new byte[1 << 10]; //start with 1k
     private short opCode = -1;
     private short courseNum = -1;
@@ -20,11 +19,6 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
     @Override
     public Message decodeNextByte(byte nextByte) {
         //notice that the top 128 ascii characters have the same representation as their utf-8 counterparts
-        //this allow us to do the following comparison
-        //if (nextByte == '\n') {
-        //    byteIndex = 0;
-        //    return popString();
-        //}
         if (byteIndex == 0) {
             dataGetter[0] = byteIndex;
         }
@@ -70,12 +64,13 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
         }
         byteIndex++;
         if (isEndOfMessage) {
-            //Get and Reset all data
+            //Get all data to runtime allocated variables
             int opCodeToSend = opCode;
             int courseNumToSend = courseNum;
             String usernameToSend = username;
             String passwordToSend = password;
 
+            //Reset all data
             opCode = -1;
             courseNum = -1;
             username = null;
@@ -113,29 +108,38 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
 
     @Override
     public byte[] encode(Message message) {
-        String[] messageToEncode = new String[1]; //message.split(" ");
-        byte[] opCode1 = shortToBytes(Short.parseShort(messageToEncode[0]));
-        byte[] opCode2 = shortToBytes(Short.parseShort(messageToEncode[1]));
-        byte[] data1 = null;
-        byte[] data2 = null;
+        short opCodeToConvert = (short) message.getOpCode();
+        short messageOpCodeToConvert = (short) ((Acknowledgement)message).getMessageOpCode();
         ByteArrayOutputStream messageToReturn = new ByteArrayOutputStream();
-        if (messageToEncode.length == 3) {
-            data1 = (messageToEncode[2] + '\0' + '\n').getBytes();
+        //ACK
+        if (opCodeToConvert == 12) {
             try {
-                messageToReturn.write(opCode1);
-                messageToReturn.write(opCode2);
-                messageToReturn.write(data1);
+                messageToReturn.write(shortToBytes(opCodeToConvert));
+                messageToReturn.write(shortToBytes(messageOpCodeToConvert));
+                switch (messageOpCodeToConvert) {
+                    case 6:
+                        messageToReturn.write((((Acknowledgement)message).getKdamCoursesList() + '\0').getBytes());
+                        break;
+                    case 7:
+                        messageToReturn.write((((Acknowledgement)message).getSeatsAvailable() + '\0').getBytes());
+                        messageToReturn.write((((Acknowledgement)message).getStudentsRegistered() + '\0').getBytes());
+                        break;
+                    case 8:
+                    case 11:
+                        messageToReturn.write((((Acknowledgement)message).getStudentStats() + '\0').getBytes());
+                        break;
+                    case 9:
+                        messageToReturn.write((((Acknowledgement)message).getIsRegistered() + '\0').getBytes());
+                        break;
+                }
             }
             catch (IOException ignored) { }
         }
-        if (messageToEncode.length == 4) {
-            data1 = (messageToEncode[2] + '\0').getBytes();
-            data2 = (messageToEncode[3] + '\0' + '\n').getBytes();
+        //ERROR
+        else {
             try {
-                messageToReturn.write(opCode1);
-                messageToReturn.write(opCode2);
-                messageToReturn.write(data1);
-                messageToReturn.write(data2);
+                messageToReturn.write(shortToBytes(opCodeToConvert));
+                messageToReturn.write(shortToBytes(messageOpCodeToConvert));
             }
             catch (IOException ignored) { }
         }
@@ -164,12 +168,12 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
         return opCodeBytes;
     }
 
-    private short bytesToShort(int index1, int index2){
-        byte[]byteArr=new byte[2];
-        byteArr[0] = bytes[index1];
-        byteArr[1] = bytes[index2];
-        short answer = (short)((byteArr[0] & 0xff) << 8);
-        answer += (short)(byteArr[1] & 0xff);
-        return answer;
+    private short bytesToShort(int startIndex, int endIndex){
+        byte[] byteArray = new byte[2];
+        byteArray[0] = bytes[startIndex];
+        byteArray[1] = bytes[endIndex];
+        short convertedData = (short) ((byteArray[0] & 0xff) << 8);
+        convertedData += (short) (byteArray[1] & 0xff);
+        return convertedData;
     }
 }

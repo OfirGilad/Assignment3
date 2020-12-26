@@ -14,6 +14,9 @@ public class CRSServer {
         Database serverDatabase = Database.getInstance();
         int port = 7777;
         String type = "tcp";
+        int num = 13;
+        short num2 = (short) num;
+        System.out.println(num2);
 
         //Test of short Convertor
         short x = 500;
