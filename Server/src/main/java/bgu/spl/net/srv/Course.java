@@ -9,7 +9,7 @@ public class Course {
     private final int[] KdamCoursesList;
     private final int numOfMaxStudent;
     private int currentNumberOfStudents;
-    TreeMap<String,Student> registeredStudents;
+    TreeMap<String, Student> registeredStudents;
 
     public Course (int courseNum, String courseName, int[] KdamCoursesList, int numOfMaxStudent) {
         this.courseNum = courseNum;

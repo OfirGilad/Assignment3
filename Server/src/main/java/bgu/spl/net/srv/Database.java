@@ -1,6 +1,5 @@
 package bgu.spl.net.srv;
-
-
+import sun.misc.Queue;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,6 +19,9 @@ public class Database {
 	private final ConcurrentHashMap<String, UserType> users;
 	private final ConcurrentHashMap<Integer, Course> courses;
 	private final ConcurrentHashMap<String, UserType> loggedInUsers;
+	private int numberOfCourses;
+	private final int[] orderedCoursesArray;
+	private final Queue<Integer> orderedCoursesQueue;
 
 	private static class SingletonHolder {
 		private static final Database getInstance = new Database();
@@ -30,9 +32,20 @@ public class Database {
 		users = new ConcurrentHashMap<>();
 		courses = new ConcurrentHashMap<>();
 		loggedInUsers = new ConcurrentHashMap<>();
+		numberOfCourses = 0;
+		orderedCoursesQueue = new Queue<>();
 		String coursesFilePath = "./Courses.txt";
 		if(!initialize(coursesFilePath)) {
 			throw new IllegalArgumentException("Courses.txt not found");
+		}
+		orderedCoursesArray = new int[numberOfCourses];
+		for (int i = 0; i < numberOfCourses; i++) {
+			try {
+				orderedCoursesArray[i] = orderedCoursesQueue.dequeue();
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -57,6 +70,8 @@ public class Database {
 				int[] KdamCoursesList = get_kdam_list_from_string(parts[2]);
 				int numOfMaxStudent = Integer.parseInt(parts[3]);
 				courses.put(courseNum,new Course(courseNum,courseName,KdamCoursesList,numOfMaxStudent));
+				orderedCoursesQueue.enqueue(courseNum);
+				numberOfCourses++;
 			}
 		} catch (IOException e) {
 			return false;
@@ -156,7 +171,7 @@ public class Database {
 	public String KdamCheck(int courseNumber) {
 		if (courses.containsKey(courseNumber)) {
 			Course course = courses.get(courseNumber);
-			int[] kdamCourses = course.getKdamCoursesList();
+			int[] kdamCourses = sortKdamCourseList(course.getKdamCoursesList());
 			StringBuilder kdamCoursesString = new StringBuilder("[");
 			for (int i = 0; i < kdamCourses.length; i ++) {
 				kdamCoursesString.append(kdamCourses[i]);
@@ -170,6 +185,29 @@ public class Database {
 		else  {
 			return "false";
 		}
+	}
+
+	//Sorting KdamCourseList according to the order in the Courses.txt file
+	private int[] sortKdamCourseList(int[] kdamCourses) {
+		int[] sortedKdamCoursesList = new int[kdamCourses.length];
+		int index = 0;
+		for (int i = 0; i < numberOfCourses; i++) {
+			if (isContainCourse(kdamCourses, orderedCoursesArray[i])) {
+				sortedKdamCoursesList[index] = orderedCoursesArray[i];
+				index++;
+			}
+		}
+		return sortedKdamCoursesList;
+	}
+
+	//Sub function for sortKdamCourseList function
+	private boolean isContainCourse(int[] kdamCourses, int courseNumber) {
+		for (int kdamCours : kdamCourses) {
+			if (kdamCours == courseNumber) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	//Used for: COURSESTAT
