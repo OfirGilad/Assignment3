@@ -2,64 +2,61 @@ package bgu.spl.net.api;
 
 import bgu.spl.net.srv.Database;
 
-public class CRSMessagingProtocol implements MessagingProtocol<String> {
+public class CRSMessagingProtocol implements MessagingProtocol<Message> {
 
     private final Database database;
     private boolean shouldTerminate = false;
     private boolean isLoggedIn = false;
-    private int opCode = -1;
-    private boolean isDataLeft = false;
+    private int opCode;
     private String username;
     private String password;
     private String userType;
     private int courseNum;
     private String studentUsername;
-    private boolean isMessageReady = false;
 
     public CRSMessagingProtocol (Database database) {
         this.database = database;
     }
 
-    public String process(String msg) {
-
-        if (opCode == -1) {
-            opCode = Integer.parseInt(msg);
-
-            if (opCode == 4 | opCode == 11) {
-                isMessageReady = true;
-                return runCommand();
-            }
+    public Message process(Message msg) {
+        opCode = msg.getOpCode();
+        switch (opCode) {
+            case 1:
+                username = ((AdminRegister) msg).getUsername();
+                password = ((AdminRegister) msg).getPassword();
+                break;
+            case 2:
+                username = ((StudentRegister) msg).getUsername();
+                password = ((StudentRegister) msg).getPassword();
+                break;
+            case 3:
+                username = ((LoginRequest) msg).getUsername();
+                password = ((LoginRequest) msg).getPassword();
+                break;
+            case 4:
+                break;
+            case 5:
+                courseNum = ((RegisterToCourse) msg).getCourseNumber();
+                break;
+            case 6:
+                courseNum = ((CheckKdamCourse) msg).getCourseNumber();
+                break;
+            case 7:
+                courseNum = ((PrintCourseStatus) msg).getCourseNumber();
+                break;
+            case 8:
+                studentUsername = ((PrintStudentStatus) msg).getStudentUsername();
+                break;
+            case 9:
+                courseNum = ((CheckIfRegistered) msg).getCourseNumber();
+                break;
+            case 10:
+                courseNum = ((UnregisterToCourse) msg).getCourseNumber();
+                break;
+            case 11:
+                break;
         }
-        else {
-            if (opCode == 1 | opCode == 2 | opCode == 3) {
-                if (!isDataLeft) {
-                    username = msg;
-                    isDataLeft = true;
-                }
-                else {
-                    password = msg;
-                    isDataLeft = false;
-                    opCode = -1;
-                    isMessageReady = true;
-                }
-            }
-
-            if (opCode == 5 | opCode == 6 | opCode == 7 | opCode == 9 | opCode == 10) {
-                courseNum = Integer.parseInt(msg);
-                isMessageReady = true;
-            }
-
-            if (opCode == 8) {
-                studentUsername = msg;
-                isMessageReady = true;
-            }
-
-            if (isMessageReady) {
-                return runCommand();
-
-            }
-        }
-        return null;
+        return runCommand();
     }
 
     public boolean shouldTerminate() {
@@ -67,10 +64,100 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
     }
 
 
-    private String runCommand () {
-        String outPutMessage = "";
+    private Message runCommand () {
+        Message outPutMessage = null;
         boolean booleanResult;
         String stringResult;
+        switch (opCode) {
+            //ADMINREG
+            case 1:
+                booleanResult = database.registerUser(username, password, "Admin");
+                if (booleanResult) {
+                    outPutMessage = new Acknowledgement(opCode);
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
+                break;
+            //STUDENTREG
+            case 2:
+                booleanResult = database.registerUser(username, password, "User");
+                if (booleanResult) {
+                    outPutMessage = new Acknowledgement(opCode);
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
+                break;
+            //LOGIN
+            case 3:
+                booleanResult = database.login(username, password);
+                if (booleanResult && !isLoggedIn) {
+                    isLoggedIn = true;
+                    userType = database.userType(username);
+                    outPutMessage = new Acknowledgement(opCode);
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
+                break;
+            //LOGOUT
+            case 4:
+                if (isLoggedIn) {
+                    isLoggedIn = false;
+                    database.logout(username);
+                    outPutMessage = new Acknowledgement(opCode);
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
+                break;
+            //COURSEREG
+            case 5:
+                booleanResult = database.registerToCourse(username, courseNum);
+                if (booleanResult) {
+                    outPutMessage = new Acknowledgement(opCode);
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
+                break;
+            //KDAMCHECK
+            case 6:
+                stringResult = database.KdamCheck(courseNum);
+                if (!stringResult.equals("false")) {
+                    outPutMessage = new Acknowledgement(opCode);
+                    ((Acknowledgement) outPutMessage).setKdamCoursesList(stringResult); //Contains Kdam Courses List
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
+                break;
+            //COURSESTAT
+            case 7:
+                courseNum = ((PrintCourseStatus) msg).getCourseNumber();
+                break;
+            //STUDENTSTAT
+            case 8:
+                studentUsername = ((PrintStudentStatus) msg).getStudentUsername();
+                break;
+            //ISREGISTER
+            case 9:
+                courseNum = ((CheckIfRegistered) msg).getCourseNumber();
+                break;
+            //UNREGISTER
+            case 10:
+                courseNum = ((UnregisterToCourse) msg).getCourseNumber();
+                break;
+            //MYCOURSES
+            case 11:
+                break;
+        }
+        return outPutMessage;
+
+        String outPutMessage = "";
+        //boolean booleanResult;
+        //String stringResult;
 
         //ADMINREG
         if (opCode == 1) {
@@ -214,6 +301,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<String> {
 
         opCode = -1;
         isMessageReady = false;
-        return outPutMessage;
+        //return outPutMessage;
+        return null;
     }
 }
