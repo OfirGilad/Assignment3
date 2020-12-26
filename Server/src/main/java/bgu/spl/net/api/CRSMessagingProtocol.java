@@ -134,7 +134,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 if (isLoggedIn && userType.equals("Admin") && database.checkIfCourseExists(courseNum)) {
                     outPutMessage = new Acknowledgement(opCode);
                     ((Acknowledgement) outPutMessage).setSeatsAvailable(database.courseStatsSeatsAvailable(courseNum));
-                    //((Acknowledgement) outPutMessage).setStudentsRegistered(database.courseStatsStudentsRegistered(courseNum));
+                    ((Acknowledgement) outPutMessage).setStudentsRegistered(database.courseStatsStudentsRegistered(courseNum));
                 }
                 else {
                     outPutMessage = new Error(opCode);
