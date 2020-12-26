@@ -169,6 +169,10 @@ class CheckMyCurrentCourses extends Message {
 class Acknowledgement extends Message {
     private final int messageOpCode;
     private String KdamCoursesList = null;
+    private String seatsAvailable = null;
+    private String studentsRegistered = null;
+    private String studentStats = null;
+    private String isRegistered = null;
 
     public Acknowledgement(int messageOpCode) {
         super(12);
@@ -183,8 +187,40 @@ class Acknowledgement extends Message {
         this.KdamCoursesList = KdamCoursesList;
     }
 
+    public void setSeatsAvailable (String seatsAvailable) {
+        this.seatsAvailable = seatsAvailable;
+    }
+
+    public void setStudentsRegistered (String studentsRegistered) {
+        this.studentsRegistered = studentsRegistered;
+    }
+
+    public void setStudentStats (String studentStats) {
+        this.studentStats = studentStats;
+    }
+
+    public void setIsRegistered (String isRegistered) {
+        this.isRegistered = isRegistered;
+    }
+
     public String getKdamCoursesList() {
         return KdamCoursesList;
+    }
+
+    public String getSeatsAvailable() {
+        return seatsAvailable;
+    }
+
+    public String getStudentsRegistered() {
+        return studentsRegistered;
+    }
+
+    public String getStudentStats() {
+        return studentStats;
+    }
+
+    public String getIsRegistered() {
+        return isRegistered;
     }
 }
 

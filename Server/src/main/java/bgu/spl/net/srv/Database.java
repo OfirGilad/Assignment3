@@ -180,7 +180,7 @@ public class Database {
 	}
 
 	//Used for: COURSESTAT
-	public String courseStatsStudentRegistered(int courseNumber) {
+	public String courseStatsStudentsRegistered(int courseNumber) {
 		if (courses.containsKey(courseNumber)) {
 			Course course = courses.get(courseNumber);
 			Set courseSet = course.getRegisteredStudents().entrySet();

@@ -63,16 +63,12 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
         return shouldTerminate;
     }
 
-
     private Message runCommand () {
         Message outPutMessage = null;
-        boolean booleanResult;
-        String stringResult;
         switch (opCode) {
             //ADMINREG
             case 1:
-                booleanResult = database.registerUser(username, password, "Admin");
-                if (booleanResult) {
+                if (database.registerUser(username, password, "Admin")) {
                     outPutMessage = new Acknowledgement(opCode);
                 }
                 else {
@@ -81,8 +77,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //STUDENTREG
             case 2:
-                booleanResult = database.registerUser(username, password, "User");
-                if (booleanResult) {
+                if (database.registerUser(username, password, "User")) {
                     outPutMessage = new Acknowledgement(opCode);
                 }
                 else {
@@ -91,8 +86,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //LOGIN
             case 3:
-                booleanResult = database.login(username, password);
-                if (booleanResult && !isLoggedIn) {
+                if (!isLoggedIn && database.login(username, password)) {
                     isLoggedIn = true;
                     userType = database.userType(username);
                     outPutMessage = new Acknowledgement(opCode);
@@ -107,6 +101,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                     isLoggedIn = false;
                     database.logout(username);
                     outPutMessage = new Acknowledgement(opCode);
+                    shouldTerminate = true;
                 }
                 else {
                     outPutMessage = new Error(opCode);
@@ -114,8 +109,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //COURSEREG
             case 5:
-                booleanResult = database.registerToCourse(username, courseNum);
-                if (booleanResult) {
+                if (isLoggedIn && userType.equals("Student") && database.registerToCourse(username, courseNum)) {
                     outPutMessage = new Acknowledgement(opCode);
                 }
                 else {
@@ -124,10 +118,10 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //KDAMCHECK
             case 6:
-                stringResult = database.KdamCheck(courseNum);
-                if (!stringResult.equals("false")) {
+                String KdamCheckResult = database.KdamCheck(courseNum);
+                if (!KdamCheckResult.equals("false")) {
                     outPutMessage = new Acknowledgement(opCode);
-                    ((Acknowledgement) outPutMessage).setKdamCoursesList(stringResult); //Contains Kdam Courses List
+                    ((Acknowledgement) outPutMessage).setKdamCoursesList(KdamCheckResult);
                 }
                 else {
                     outPutMessage = new Error(opCode);
@@ -135,173 +129,55 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //COURSESTAT
             case 7:
-                courseNum = ((PrintCourseStatus) msg).getCourseNumber();
+                if (isLoggedIn && userType.equals("Admin") && database.checkIfCourseExists(courseNum)) {
+                    outPutMessage = new Acknowledgement(opCode);
+                    ((Acknowledgement) outPutMessage).setSeatsAvailable(database.courseStatsSeatsAvailable(courseNum));
+                    ((Acknowledgement) outPutMessage).setStudentsRegistered(database.courseStatsSeatsAvailable(courseNum));
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
                 break;
             //STUDENTSTAT
             case 8:
-                studentUsername = ((PrintStudentStatus) msg).getStudentUsername();
+                if (isLoggedIn && userType.equals("Admin") && database.checkIfStudentExists(studentUsername)) {
+                    outPutMessage = new Acknowledgement(opCode);
+                    ((Acknowledgement) outPutMessage).setStudentStats(database.studentStats(studentUsername));
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
                 break;
             //ISREGISTER
             case 9:
-                courseNum = ((CheckIfRegistered) msg).getCourseNumber();
+                if (isLoggedIn && userType.equals("Student") && database.checkIfCourseExists(courseNum)) {
+                    outPutMessage = new Acknowledgement(opCode);
+                    ((Acknowledgement) outPutMessage).setIsRegistered(database.isRegistered(username, courseNum));
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
                 break;
             //UNREGISTER
             case 10:
-                courseNum = ((UnregisterToCourse) msg).getCourseNumber();
+                if (isLoggedIn && userType.equals("Student") && database.checkIfCourseExists(courseNum) && database.unregisterToCourse(username, courseNum)) {
+                    outPutMessage = new Acknowledgement(opCode);
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
                 break;
             //MYCOURSES
             case 11:
+                if (isLoggedIn && userType.equals("Student")) {
+                    outPutMessage = new Acknowledgement(opCode);
+                    ((Acknowledgement) outPutMessage).setStudentStats(database.studentStats(username));
+                }
+                else {
+                    outPutMessage = new Error(opCode);
+                }
                 break;
         }
         return outPutMessage;
-
-        String outPutMessage = "";
-        //boolean booleanResult;
-        //String stringResult;
-
-        //ADMINREG
-        if (opCode == 1) {
-            booleanResult = database.registerUser(username, password, "Admin");
-            if (booleanResult) {
-                outPutMessage += "12 1";
-            }
-            else {
-                outPutMessage += "13 1";
-            }
-        }
-
-        //STUDENTREG
-        if (opCode == 2) {
-            booleanResult = database.registerUser(username, password, "User");
-            if (booleanResult) {
-                outPutMessage += "12 2";
-            }
-            else {
-                outPutMessage += "13 2";
-            }
-        }
-
-        //LOGIN
-        if (opCode == 3) {
-            booleanResult = database.login(username, password);
-            if (booleanResult && !isLoggedIn) {
-                isLoggedIn = true;
-                userType = database.userType(username);
-                outPutMessage += "12 3";
-            }
-            else {
-                outPutMessage += "13 3";
-            }
-        }
-
-        //LOGOUT
-        if (opCode == 4) {
-            if (isLoggedIn) {
-                isLoggedIn = false;
-                database.logout(username);
-                outPutMessage += "12 4";
-            }
-            else {
-                outPutMessage += "13 4";
-            }
-        }
-
-        //COURSEREG
-        if (opCode == 5) {
-            booleanResult = database.registerToCourse(username, courseNum);
-            if (booleanResult) {
-                outPutMessage += "12 5";
-            }
-            else {
-                outPutMessage += "13 5";
-            }
-        }
-
-        //KDAMCHECK
-        if (opCode == 6) {
-            stringResult = database.KdamCheck(courseNum);
-            if (!stringResult.equals("false")) {
-                outPutMessage += "12 6 ";
-                outPutMessage += stringResult; //Contains Kdam Courses List
-            }
-            else {
-                outPutMessage += "13 6";
-            }
-        }
-
-        //COURSESTAT
-        if (opCode == 7) {
-            if (userType.equals("Admin")) {
-                booleanResult = database.checkIfCourseExists(courseNum);
-                if (booleanResult) {
-                    outPutMessage += "12 7 ";
-                    outPutMessage += database.courseStatsSeatsAvailable(courseNum) + " ";
-                    outPutMessage += database.courseStatsSeatsAvailable(courseNum);
-                }
-                else {
-                    outPutMessage += "13 7";
-                }
-            }
-            else {
-                outPutMessage += "13 7";
-            }
-        }
-
-        //STUDENTSTAT
-        if (opCode == 8) {
-            if (isLoggedIn && userType.equals("Admin")) {
-                booleanResult = database.checkIfStudentExists(studentUsername);
-                if (booleanResult) {
-                    outPutMessage += "12 8 ";
-                    outPutMessage += database.studentStats(studentUsername);
-                }
-                else {
-                    outPutMessage += "13 8";
-                }
-            }
-            else {
-                outPutMessage += "13 8";
-            }
-        }
-
-        //ISREGISTER
-        if (opCode == 9) {
-            if (isLoggedIn && userType.equals("Student") & database.checkIfCourseExists(courseNum)) {
-                outPutMessage += "12 9 ";
-                outPutMessage += database.isRegistered(username, courseNum);
-            }
-            else {
-                outPutMessage += "13 9";
-            }
-        }
-
-        //UNREGISTER
-        if (opCode == 10) {
-            if (isLoggedIn && userType.equals("Student") & database.checkIfCourseExists(courseNum)) {
-                booleanResult = database.unregisterToCourse(username, courseNum);
-                if (booleanResult) {
-                    outPutMessage += "12 10";
-                }
-            }
-            else {
-                outPutMessage += "13 10";
-            }
-        }
-
-        //MYCOURSES
-        if (opCode == 11) {
-            if (isLoggedIn && userType.equals("Student")) {
-                outPutMessage += "12 11 ";
-                outPutMessage += database.studentStats(username);
-            }
-            else {
-                outPutMessage += "13 11";
-            }
-        }
-
-        opCode = -1;
-        isMessageReady = false;
-        //return outPutMessage;
-        return null;
     }
 }
