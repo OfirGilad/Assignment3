@@ -52,7 +52,7 @@ int main (int argc, char *argv[]) {
             outPut = outPut + " " + to_string(msgOpCode);
             string msgData;
 
-            if(msgOpCode == 6 | msgOpCode == 9 | msgOpCode == 11){
+            if(msgOpCode == 6 || msgOpCode == 9 || msgOpCode == 11){
                 connectionHandler.getLine(msgData);
                 outPut= outPut + '\n' + msgData;
             }
@@ -96,4 +96,3 @@ int main (int argc, char *argv[]) {
     delete toTerminate;
     return 0;
 }
-

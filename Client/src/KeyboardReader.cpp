@@ -48,7 +48,6 @@ void KeyboardReader::run() {
         if (onScreenText[0] == "LOGOUT") {
             shortToBytes(4, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
-            *toLogout = true;
         }
 
         if (onScreenText[0] == "COURSEREG") {

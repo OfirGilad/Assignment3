@@ -15,7 +15,6 @@ public:
     short bytesToShort(char* bytesArray);
 private:
     ConnectionHandler* connectionHandler;
-    bool* toLogout;
     bool* toTerminate;
 };
 
