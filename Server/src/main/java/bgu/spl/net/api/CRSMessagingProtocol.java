@@ -34,6 +34,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 password = ((LoginRequest) msg).getPassword();
                 break;
             case 4:
+                //LogoutRequest
                 break;
             case 5:
                 courseNum = ((RegisterToCourse) msg).getCourseNumber();
@@ -54,6 +55,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 courseNum = ((UnregisterToCourse) msg).getCourseNumber();
                 break;
             case 11:
+                //CheckMyCurrentCourses
                 break;
         }
         return runCommand();
@@ -132,7 +134,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 if (isLoggedIn && userType.equals("Admin") && database.checkIfCourseExists(courseNum)) {
                     outPutMessage = new Acknowledgement(opCode);
                     ((Acknowledgement) outPutMessage).setSeatsAvailable(database.courseStatsSeatsAvailable(courseNum));
-                    ((Acknowledgement) outPutMessage).setStudentsRegistered(database.courseStatsSeatsAvailable(courseNum));
+                    //((Acknowledgement) outPutMessage).setStudentsRegistered(database.courseStatsStudentsRegistered(courseNum));
                 }
                 else {
                     outPutMessage = new Error(opCode);

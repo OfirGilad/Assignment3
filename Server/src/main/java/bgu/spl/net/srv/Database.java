@@ -2,7 +2,6 @@ package bgu.spl.net.srv;
 
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -19,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Database {
 
 	private final ConcurrentHashMap<String, UserType> users;
-	private ConcurrentHashMap<Integer, Course> courses;
+	private final ConcurrentHashMap<Integer, Course> courses;
 	private final ConcurrentHashMap<String, UserType> loggedInUsers;
 
 	private static class SingletonHolder {
@@ -28,10 +27,13 @@ public class Database {
 
 	//to prevent user from creating new Database
 	private Database() {
-		// TODO: implement
 		users = new ConcurrentHashMap<>();
 		courses = new ConcurrentHashMap<>();
 		loggedInUsers = new ConcurrentHashMap<>();
+		String coursesFilePath = "./Courses.txt";
+		if(!initialize(coursesFilePath)) {
+			throw new IllegalArgumentException("Courses.txt not found");
+		}
 	}
 
 	/**
@@ -40,13 +42,13 @@ public class Database {
 	public static Database getInstance() {
 		return SingletonHolder.getInstance;
 	}
-	
+
 	/**
 	 * loads the courses from the file path specified
 	 * into the Database, returns true if successful.
 	 */
-	boolean initialize(String coursesFilePath) throws FileNotFoundException {
-		try(BufferedReader br = new BufferedReader(new FileReader("src/Courses.txt"))) {
+	boolean initialize(String coursesFilePath) {
+		try(BufferedReader br = new BufferedReader(new FileReader(coursesFilePath))) {
 			for(String line; (line = br.readLine()) != null; ) {
 				String[] parts = line.split("\\|");
 
@@ -64,12 +66,14 @@ public class Database {
 
 	private int[] get_kdam_list_from_string(String kdam_str)
 	{
+		int[] kdam_int_arr = new int[0];
 		kdam_str = kdam_str.substring(1,kdam_str.length()-1);
-		String [] kdam_str_arr = kdam_str.split("\\,");
-		int [] kdam_int_arr = new int [kdam_str_arr.length];
-		for(int i=0;i<kdam_str_arr.length;i++)
-		{
-			kdam_int_arr[i] = Integer.parseInt(kdam_str_arr[i]);
+		if(!kdam_str.equals("")) {
+			String[] kdam_str_arr = kdam_str.split(",");
+			kdam_int_arr = new int[kdam_str_arr.length];
+			for (int i = 0; i < kdam_str_arr.length; i++) {
+				kdam_int_arr[i] = Integer.parseInt(kdam_str_arr[i]);
+			}
 		}
 		return kdam_int_arr;
 	}
@@ -182,8 +186,7 @@ public class Database {
 	//Used for: COURSESTAT
 	public String courseStatsStudentsRegistered(int courseNumber) {
 		if (courses.containsKey(courseNumber)) {
-			Course course = courses.get(courseNumber);
-			Set courseSet = course.getRegisteredStudents().entrySet();
+			Set courseSet = courses.get(courseNumber).getRegisteredStudents().entrySet();
 			Iterator courseIterator = courseSet.iterator();
 			StringBuilder studentRegistered = new StringBuilder("[");
 			while (courseIterator.hasNext()) {

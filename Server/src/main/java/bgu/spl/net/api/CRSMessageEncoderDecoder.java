@@ -109,11 +109,12 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
     @Override
     public byte[] encode(Message message) {
         short opCodeToConvert = (short) message.getOpCode();
-        short messageOpCodeToConvert = (short) ((Acknowledgement)message).getMessageOpCode();
+        short messageOpCodeToConvert;
         ByteArrayOutputStream messageToReturn = new ByteArrayOutputStream();
         //ACK
         if (opCodeToConvert == 12) {
             try {
+                messageOpCodeToConvert = (short) ((Acknowledgement)message).getMessageOpCode();
                 messageToReturn.write(shortToBytes(opCodeToConvert));
                 messageToReturn.write(shortToBytes(messageOpCodeToConvert));
                 switch (messageOpCodeToConvert) {
@@ -138,6 +139,7 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
         //ERROR
         else {
             try {
+                messageOpCodeToConvert = (short) ((Error)message).getMessageOpCode();
                 messageToReturn.write(shortToBytes(opCodeToConvert));
                 messageToReturn.write(shortToBytes(messageOpCodeToConvert));
             }

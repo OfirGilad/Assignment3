@@ -2,7 +2,6 @@ package bgu.spl.net.api;
 
 public abstract class Message {
     private final int opCode;
-    private byte[] response;
 
     protected Message(int opCode) {
         this.opCode=opCode;
@@ -10,10 +9,6 @@ public abstract class Message {
 
     public int getOpCode() {
         return opCode;
-    }
-
-    public byte[] sendResponse() {
-        return response;
     }
 }
 

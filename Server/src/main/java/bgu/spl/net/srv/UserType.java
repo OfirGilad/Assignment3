@@ -6,7 +6,6 @@ public abstract class UserType {
 
     protected final String username;
     protected final String password;
-    protected boolean isLoggedIn = false;
 
     public UserType(String username, String password) {
         this.username = username;
@@ -19,18 +18,6 @@ public abstract class UserType {
 
     public String getPassword() {
         return password;
-    }
-
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public void setLoggedIn() {
-        isLoggedIn = true;
-    }
-
-    public void setLoggedOut() {
-        isLoggedIn = false;
     }
 }
 
