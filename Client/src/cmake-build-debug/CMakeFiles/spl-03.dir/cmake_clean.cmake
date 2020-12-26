@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/spl-03.dir/Client2Thread.cpp.o"
   "CMakeFiles/spl-03.dir/ConnectionReader.cpp.o"
   "CMakeFiles/spl-03.dir/KeyboardReader.cpp.o"
   "CMakeFiles/spl-03.dir/connectionHandler.cpp.o"

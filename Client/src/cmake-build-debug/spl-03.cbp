@@ -84,6 +84,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/spl211/IdeaProjects/Assignment3/Client/src/Client2Thread.cpp">
+			<Option target="spl-03"/>
+		</Unit>
 		<Unit filename="/home/spl211/IdeaProjects/Assignment3/Client/src/ConnectionReader.cpp">
 			<Option target="spl-03"/>
 		</Unit>

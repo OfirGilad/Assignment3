@@ -143,6 +143,33 @@ spl-03/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/build
 .PHONY : spl-03/fast
 
+Client2Thread.o: Client2Thread.cpp.o
+
+.PHONY : Client2Thread.o
+
+# target to build an object file
+Client2Thread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client2Thread.cpp.o
+.PHONY : Client2Thread.cpp.o
+
+Client2Thread.i: Client2Thread.cpp.i
+
+.PHONY : Client2Thread.i
+
+# target to preprocess a source file
+Client2Thread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client2Thread.cpp.i
+.PHONY : Client2Thread.cpp.i
+
+Client2Thread.s: Client2Thread.cpp.s
+
+.PHONY : Client2Thread.s
+
+# target to generate assembly for a file
+Client2Thread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client2Thread.cpp.s
+.PHONY : Client2Thread.cpp.s
+
 ConnectionReader.o: ConnectionReader.cpp.o
 
 .PHONY : ConnectionReader.o
@@ -260,6 +287,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... spl-03"
+	@echo "... Client2Thread.o"
+	@echo "... Client2Thread.i"
+	@echo "... Client2Thread.s"
 	@echo "... ConnectionReader.o"
 	@echo "... ConnectionReader.i"
 	@echo "... ConnectionReader.s"

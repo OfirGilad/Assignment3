@@ -1,6 +1,4 @@
-#include <stdlib.h>
 #include "../include/connectionHandler.h"
-#include "../include/ConnectionReader.h"
 #include "../include/KeyboardReader.h"
 #include <thread>
 
@@ -9,6 +7,13 @@
 */
 
 using namespace std;
+
+//This class is used to convert data from Bytes to Short
+short bytesToShort(char* bytesArray) {
+    short result = (short)((bytesArray[0] & 0xff) << 8);
+    result += (short)(bytesArray[1] & 0xff);
+    return result;
+}
 
 int main (int argc, char *argv[]) {
     //if (argc < 3) {
@@ -29,56 +34,66 @@ int main (int argc, char *argv[]) {
     bool *toTerminate = new bool;
     *toTerminate = false;
 
-    KeyBoardReader keyBoardReader(&connectionHandler,toTerminate);
-    ConnectionReader connectionReader(&connectionHandler,toTerminate);
-    thread connectionThread(&ConnectionReader::run, &connectionReader);
-    thread keyBoardThread(&KeyBoardReader::run, &keyBoardReader);
-    connectionThread.join();
-    keyBoardThread.join();
+    KeyboardReader keyboardReader(&connectionHandler,toTerminate);
+    thread keyboardThread(&KeyboardReader::run, &keyboardReader);
 
-    delete toTerminate;
+    while (!(*toTerminate)) {
+        char* opCodeArray = new char[2];
+        connectionHandler.getBytes(opCodeArray, 2);
+        short opCode = bytesToShort(opCodeArray);
+        string outPut;
 
-    return 0;
+        //TODO: update code
+        if (opCode==12){
 
+            outPut = "ACK";
+            connectionHandler.getBytes(opCodeArray, 2);
+            short msgOpCode = bytesToShort(opCodeArray);
+            outPut = outPut + " " + to_string(msgOpCode);
+            string msgData;
 
+            if(msgOpCode == 6 | msgOpCode == 9 | msgOpCode == 11){
+                connectionHandler.getLine(msgData);
+                outPut= outPut + '\n' + msgData;
+            }
 
+            if (msgOpCode == 7) {
+                connectionHandler.getLine(msgData);
+                outPut = outPut + '\n' + "Course:" + msgData;
+                connectionHandler.getLine(msgData);
+                outPut = outPut + '\n' + "Seats Available:" + msgData;
+                connectionHandler.getLine(msgData);
+                outPut = outPut + '\n' + "Student Registered:" + msgData;
 
-	//From here we will see the rest of the echo client implementation:
-    while (1) {
-        const short bufsize = 1024;
-        char buf[bufsize];
-        std::cin.getline(buf, bufsize);
-		std::string line(buf);
-		int len=line.length();
-        if (!connectionHandler.sendLine(line)) {
-            std::cout << "Disconnected. Exiting...\n" << std::endl;
-            break;
+            }
+
+            if (msgOpCode == 8) {
+                connectionHandler.getLine(msgData);
+                outPut = outPut + '\n' + "Student:" + msgData;
+                connectionHandler.getLine(msgData);
+                outPut = outPut + '\n' + "Courses:" + msgData;
+            }
+
+            if(msgOpCode == 4){
+                *toTerminate=true;
+            }
         }
-		// connectionHandler.sendLine(line) appends '\n' to the message. Therefore we send len+1 bytes.
-        std::cout << "Sent " << len+1 << " bytes to server" << std::endl;
 
+        if (opCode==13){
+            outPut="ERROR";
 
-        // We can use one of three options to read data from the server:
-        // 1. Read a fixed number of characters
-        // 2. Read a line (up to the newline character using the getline() buffered reader
-        // 3. Read up to the null character
-        std::string answer;
-        // Get back an answer: by using the expected number of bytes (len bytes + newline delimiter)
-        // We could also use: connectionHandler.getline(answer) and then get the answer without the newline char at the end
-        if (!connectionHandler.getLine(answer)) {
-            std::cout << "Disconnected. Exiting...\n" << std::endl;
-            break;
+            connectionHandler.getBytes(opCodeArray, 2);
+            short errorCode = bytesToShort(opCodeArray);
+            outPut = outPut + " " + to_string(errorCode);
         }
+        if (outPut != "")
+            cout << outPut << endl;
 
-		len=answer.length();
-		// A C string must end with a 0 char delimiter.  When we filled the answer buffer from the socket
-		// we filled up to the \n char - we must make sure now that a 0 char is also present. So we truncate last character.
-        answer.resize(len-1);
-        std::cout << "Reply: " << answer << " " << len << " bytes " << std::endl << std::endl;
-        if (answer == "bye") {
-            std::cout << "Exiting...\n" << std::endl;
-            break;
-        }
+        delete[] opCodeArray;
     }
+
+    keyboardThread.join();
+    delete toTerminate;
     return 0;
 }
+

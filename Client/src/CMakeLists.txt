@@ -13,4 +13,4 @@ set(SOURCE_FILES
 add_executable(spl-03 echoClient.cpp
         connectionHandler.cpp
         ConnectionReader.cpp
-        KeyboardReader.cpp)
+        KeyboardReader.cpp Client2Thread.cpp)
