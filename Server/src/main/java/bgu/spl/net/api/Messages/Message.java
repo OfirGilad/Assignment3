@@ -27,6 +27,8 @@ class AdminRegister extends Message {
         this.username = username;
         this.password = password;
     }
+    public String getUsername(){return username;}
+    public String getPassword(){return password;}
 }
 
 class StudentRegister extends Message {
@@ -38,6 +40,8 @@ class StudentRegister extends Message {
         this.username = username;
         this.password = password;
     }
+    public String getUsername(){return username;}
+    public String getPassword(){return password;}
 }
 
 class LoginRequest extends Message {
@@ -49,7 +53,81 @@ class LoginRequest extends Message {
         this.username = username;
         this.password = password;
     }
+    public String getUsername(){return username;}
+    public String getPassword(){return password;}
 }
+
+class RegisterCourse extends Message {
+    private int  courseNumber;
+
+    public RegisterCourse(int opCode, int courseNumber) {
+        super(opCode);
+        this.courseNumber = courseNumber;
+    }
+    public int getCouseNum(){return courseNumber;}
+}
+
+
+class KdamCheck extends Message {
+    private int  courseNumber;
+
+    public KdamCheck(int opCode, int courseNumber) {
+        super(opCode);
+        this.courseNumber = courseNumber;
+    }
+    public int getCouseNum(){return courseNumber;}
+}
+
+
+class CourseStatus extends Message {
+    private int  courseNumber;
+
+    public CourseStatus(int opCode, int courseNumber) {
+        super(opCode);
+        this.courseNumber = courseNumber;
+    }
+    public int getCouseNum(){return courseNumber;}
+}
+
+class StudentStatus extends Message {
+    private String username;
+
+
+    public StudentStatus(int opCode, String username) {
+        super(opCode);
+        this.username = username;
+    }
+    public String getUsername(){return username;}
+}
+
+
+class IsRegistered extends Message {
+    private int  courseNumber;
+
+    public IsRegistered(int opCode, int courseNumber) {
+        super(opCode);
+        this.courseNumber = courseNumber;
+    }
+    public int getCouseNum(){return courseNumber;}
+}
+
+class UnregisterCourse extends Message {
+    private int  courseNumber;
+
+    public UnregisterCourse(int opCode, int courseNumber) {
+        super(opCode);
+        this.courseNumber = courseNumber;
+    }
+    public int getCouseNum(){return courseNumber;}
+}
+
+class MyCourses extends Message {
+
+    public MyCourses(int opCode) {
+        super(opCode);
+    }
+}
+
 
 class LogoutRequest extends Message {
 
