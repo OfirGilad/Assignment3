@@ -14,7 +14,6 @@ void ConnectionReader::run() {
         short opCode = bytesToShort(opCodeArray);
         string outPut;
 
-        //TODO: update code
         if (opCode==12){
 
             outPut = "ACK";
@@ -23,7 +22,7 @@ void ConnectionReader::run() {
             outPut = outPut + " " + to_string(msgOpCode);
             string msgData;
 
-            if(msgOpCode == 6 | msgOpCode == 9 | msgOpCode == 11){
+            if(msgOpCode == 6 || msgOpCode == 9 || msgOpCode == 11){
                 connectionHandler->getLine(msgData);
                 outPut= outPut + '\n' + msgData;
             }
