@@ -24,7 +24,7 @@ public class Course {
         return currentNumberOfStudents < numOfMaxStudent;
     }
 
-    public boolean isEligible(TreeMap<Integer, Course> courses) {
+    public boolean isEligible(HashMap<Integer, Course> courses) {
         for (int courseNum : KdamCoursesList) {
             if (courses.get(courseNum) == null) {
                 return false;

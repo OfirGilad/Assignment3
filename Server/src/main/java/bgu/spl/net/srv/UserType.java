@@ -1,6 +1,6 @@
 package bgu.spl.net.srv;
 
-import java.util.TreeMap;
+import java.util.HashMap;
 
 public abstract class UserType {
 
@@ -22,24 +22,33 @@ public abstract class UserType {
 }
 
 class Student extends UserType {
-    private final TreeMap<Integer, Course> courses;
+    private final HashMap<Integer, Course> courses;
+    private int numberOfCoursesRegisteredTo;
 
     public Student(String username, String password) {
         super(username, password);
-        courses = new TreeMap<>();
+        courses = new HashMap<>();
+        numberOfCoursesRegisteredTo = 0;
     }
 
-    public TreeMap<Integer, Course> getCourses() {
+    //All Student class methods are synchronized since every change in the student's courses HashMap effect all this functions output
+    //Example: when Student requests: COURSEREG, and Admin requests: this STUDENTSTAT
+    public synchronized HashMap<Integer, Course> getCourses() {
         return courses;
     }
 
-    public boolean registerToCourse(Course course) {
+    public synchronized int getNumberOfCoursesRegisteredTo() {
+        return numberOfCoursesRegisteredTo;
+    }
+
+    public synchronized boolean registerToCourse(Course course) {
         if (!courses.containsValue(course)) {
             if (!course.isFull()) {
                 if (!course.isEligible(courses)) {
                     course.registerStudent(this);
                     courses.put(course.getCourseNum(), course);
                     //"User registered successfully"
+                    numberOfCoursesRegisteredTo++;
                     return true;
                 }
                 else {
@@ -58,11 +67,12 @@ class Student extends UserType {
         }
     }
 
-    public boolean unregisterToCourse(Course course) {
+    public synchronized boolean unregisterToCourse(Course course) {
         if (courses.containsValue(course)) {
             course.unregisterStudent(this);
             courses.remove(course.getCourseNum(), course);
             //"User unregistered successfully"
+            numberOfCoursesRegisteredTo--;
             return true;
         }
         else {
@@ -71,7 +81,7 @@ class Student extends UserType {
         }
     }
 
-    public boolean isRegisteredToCourse(int courseNumber) {
+    public synchronized boolean isRegisteredToCourse(int courseNumber) {
         return courses.containsKey(courseNumber);
     }
 }

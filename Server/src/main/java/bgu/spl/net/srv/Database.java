@@ -171,7 +171,7 @@ public class Database {
 	public String KdamCheck(int courseNumber) {
 		if (courses.containsKey(courseNumber)) {
 			Course course = courses.get(courseNumber);
-			int[] kdamCourses = sortKdamCourseList(course.getKdamCoursesList());
+			int[] kdamCourses = sortCourseArray(course.getKdamCoursesList());
 			StringBuilder kdamCoursesString = new StringBuilder("[");
 			for (int i = 0; i < kdamCourses.length; i ++) {
 				kdamCoursesString.append(kdamCourses[i]);
@@ -187,12 +187,12 @@ public class Database {
 		}
 	}
 
-	//Sorting KdamCourseList according to the order in the Courses.txt file
-	private int[] sortKdamCourseList(int[] kdamCourses) {
-		int[] sortedKdamCoursesList = new int[kdamCourses.length];
+	//Sorting courseArray according to the order in the Courses.txt file
+	private int[] sortCourseArray(int[] coursesArray) {
+		int[] sortedKdamCoursesList = new int[coursesArray.length];
 		int index = 0;
 		for (int i = 0; i < numberOfCourses; i++) {
-			if (isContainCourse(kdamCourses, orderedCoursesArray[i])) {
+			if (isContainCourse(coursesArray, orderedCoursesArray[i])) {
 				sortedKdamCoursesList[index] = orderedCoursesArray[i];
 				index++;
 			}
@@ -200,7 +200,7 @@ public class Database {
 		return sortedKdamCoursesList;
 	}
 
-	//Sub function for sortKdamCourseList function
+	//Sub function for sortCourseArray function
 	private boolean isContainCourse(int[] kdamCourses, int courseNumber) {
 		for (int kdamCours : kdamCourses) {
 			if (kdamCours == courseNumber) {
@@ -247,13 +247,22 @@ public class Database {
 		if (users.containsKey(username)) {
 			UserType user = users.get(username);
 			if (user.getClass() != Admin.class) {
+				//Export all the HashMap data to int array
 				Set coursesSet = ((Student) user).getCourses().entrySet();
 				Iterator coursesIterator = coursesSet.iterator();
-				StringBuilder coursesRegistered = new StringBuilder("[");
+				int[] sortedRegisteredCoursesList = new int [((Student) user).getNumberOfCoursesRegisteredTo()];
+				int index = 0;
 				while (coursesIterator.hasNext()) {
 					Map.Entry mapEntry = (Map.Entry) coursesIterator.next();
-					coursesRegistered.append(mapEntry.getKey());
-					if (coursesIterator.hasNext()) {
+					sortedRegisteredCoursesList[index] = (Integer) mapEntry.getKey();
+					index++;
+				}
+				//Sort the courses array and write the data into the output string result
+				sortedRegisteredCoursesList = sortCourseArray(sortedRegisteredCoursesList);
+				StringBuilder coursesRegistered = new StringBuilder("[");
+				for (int course : sortedRegisteredCoursesList) {
+					coursesRegistered.append(course);
+					if (course != sortedRegisteredCoursesList[sortedRegisteredCoursesList.length - 1]) {
 						coursesRegistered.append(",");
 					}
 				}
