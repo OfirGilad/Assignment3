@@ -70,7 +70,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
         switch (opCode) {
             //ADMINREG
             case 1:
-                if (database.registerUser(username, password, "Admin")) {
+                if (!isLoggedIn && database.registerUser(username, password, "Admin")) {
                     outPutMessage = new Acknowledgement(opCode);
                 }
                 else {
@@ -79,7 +79,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //STUDENTREG
             case 2:
-                if (database.registerUser(username, password, "User")) {
+                if (!isLoggedIn && database.registerUser(username, password, "User")) {
                     outPutMessage = new Acknowledgement(opCode);
                 }
                 else {
