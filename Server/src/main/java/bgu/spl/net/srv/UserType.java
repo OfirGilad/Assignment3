@@ -1,6 +1,6 @@
 package bgu.spl.net.srv;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 public abstract class UserType {
 
@@ -22,23 +22,17 @@ public abstract class UserType {
 }
 
 class Student extends UserType {
-    private final HashMap<Integer, Course> courses;
-    private int numberOfCoursesRegisteredTo;
+    private final TreeMap<Integer, Course> courses;
 
     public Student(String username, String password) {
         super(username, password);
-        courses = new HashMap<>();
-        numberOfCoursesRegisteredTo = 0;
+        courses = new TreeMap<>();
     }
 
     //All Student class methods are synchronized since every change in the student's courses HashMap effect all this functions output
     //Example: when Student requests: COURSEREG, and Admin requests: this STUDENTSTAT
-    public synchronized HashMap<Integer, Course> getCourses() {
+    public synchronized TreeMap<Integer, Course> getCourses() {
         return courses;
-    }
-
-    public synchronized int getNumberOfCoursesRegisteredTo() {
-        return numberOfCoursesRegisteredTo;
     }
 
     public synchronized boolean registerToCourse(Course course) {
@@ -46,9 +40,8 @@ class Student extends UserType {
             if (!course.isFull()) {
                 if (!course.isEligible(courses)) {
                     course.registerStudent(this);
-                    courses.put(course.getCourseNum(), course);
+                    courses.put(course.getCourseId(), course);
                     //"User registered successfully"
-                    numberOfCoursesRegisteredTo++;
                     return true;
                 }
                 else {
@@ -72,7 +65,6 @@ class Student extends UserType {
             course.unregisterStudent(this);
             courses.remove(course.getCourseNum(), course);
             //"User unregistered successfully"
-            numberOfCoursesRegisteredTo--;
             return true;
         }
         else {

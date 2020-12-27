@@ -164,6 +164,7 @@ class CheckMyCurrentCourses extends Message {
 class Acknowledgement extends Message {
     private final int messageOpCode;
     private String KdamCoursesList = null;
+    private String courseNumberAndName = null;
     private String seatsAvailable = null;
     private String studentsRegistered = null;
     private String studentStats = null;
@@ -180,6 +181,10 @@ class Acknowledgement extends Message {
 
     public void setKdamCoursesList (String KdamCoursesList) {
         this.KdamCoursesList = KdamCoursesList;
+    }
+
+    public void setCourseNumberAndName(String courseNumberAndName) {
+        this.courseNumberAndName = courseNumberAndName;
     }
 
     public void setSeatsAvailable (String seatsAvailable) {
@@ -200,6 +205,10 @@ class Acknowledgement extends Message {
 
     public String getKdamCoursesList() {
         return KdamCoursesList;
+    }
+
+    public String getCourseNumberAndName() {
+        return courseNumberAndName;
     }
 
     public String getSeatsAvailable() {

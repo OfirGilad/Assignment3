@@ -122,6 +122,7 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
                         messageToReturn.write((((Acknowledgement)message).getKdamCoursesList() + '\0').getBytes());
                         break;
                     case 7:
+                        messageToReturn.write((((Acknowledgement)message).getCourseNumberAndName() + '\0').getBytes());
                         messageToReturn.write((((Acknowledgement)message).getSeatsAvailable() + '\0').getBytes());
                         messageToReturn.write((((Acknowledgement)message).getStudentsRegistered() + '\0').getBytes());
                         break;

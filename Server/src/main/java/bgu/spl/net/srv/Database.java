@@ -69,7 +69,7 @@ public class Database {
 				String courseName = parts[1];
 				int[] KdamCoursesList = get_kdam_list_from_string(parts[2]);
 				int numOfMaxStudent = Integer.parseInt(parts[3]);
-				courses.put(courseNum,new Course(courseNum,courseName,KdamCoursesList,numOfMaxStudent));
+				courses.put(courseNum,new Course(courseNum,courseName,KdamCoursesList,numOfMaxStudent,numberOfCourses));
 				orderedCoursesQueue.enqueue(courseNum);
 				numberOfCourses++;
 			}
@@ -171,7 +171,11 @@ public class Database {
 	public String KdamCheck(int courseNumber) {
 		if (courses.containsKey(courseNumber)) {
 			Course course = courses.get(courseNumber);
-			int[] kdamCourses = sortCourseArray(course.getKdamCoursesList());
+			//Sort KdamCoursesList for the selected course
+			if (!course.getIsSorted()) {
+				course.setSortedKdamCoursesList(sortCourseArray(course.getKdamCoursesList()));
+			}
+			int[] kdamCourses = course.getKdamCoursesList();
 			StringBuilder kdamCoursesString = new StringBuilder("[");
 			for (int i = 0; i < kdamCourses.length; i ++) {
 				kdamCoursesString.append(kdamCourses[i]);
@@ -208,6 +212,17 @@ public class Database {
 			}
 		}
 		return false;
+	}
+
+	//Used for: COURSESTAT
+	public String courseStatsCourseNumberAndName(int courseNumber) {
+		if (courses.containsKey(courseNumber)) {
+			Course course = courses.get(courseNumber);
+			return "(" + courseNumber + ") " + course.getCourseName();
+		}
+		else  {
+			return null;
+		}
 	}
 
 	//Used for: COURSESTAT
@@ -250,19 +265,11 @@ public class Database {
 				//Export all the HashMap data to int array
 				Set coursesSet = ((Student) user).getCourses().entrySet();
 				Iterator coursesIterator = coursesSet.iterator();
-				int[] sortedRegisteredCoursesList = new int [((Student) user).getNumberOfCoursesRegisteredTo()];
-				int index = 0;
-				while (coursesIterator.hasNext()) {
-					Map.Entry mapEntry = (Map.Entry) coursesIterator.next();
-					sortedRegisteredCoursesList[index] = (Integer) mapEntry.getKey();
-					index++;
-				}
-				//Sort the courses array and write the data into the output string result
-				sortedRegisteredCoursesList = sortCourseArray(sortedRegisteredCoursesList);
 				StringBuilder coursesRegistered = new StringBuilder("[");
-				for (int course : sortedRegisteredCoursesList) {
-					coursesRegistered.append(course);
-					if (course != sortedRegisteredCoursesList[sortedRegisteredCoursesList.length - 1]) {
+				while (coursesIterator.hasNext()) {
+					Map.Entry mapEntry = (Map.Entry)coursesIterator.next();
+					coursesRegistered.append(mapEntry.getKey());
+					if (coursesIterator.hasNext()) {
 						coursesRegistered.append(",");
 					}
 				}

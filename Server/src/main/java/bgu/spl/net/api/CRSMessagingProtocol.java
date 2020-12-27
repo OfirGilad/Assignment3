@@ -120,10 +120,15 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //KDAMCHECK
             case 6:
-                String KdamCheckResult = database.KdamCheck(courseNum);
-                if (!KdamCheckResult.equals("false")) {
-                    outPutMessage = new Acknowledgement(opCode);
-                    ((Acknowledgement) outPutMessage).setKdamCoursesList(KdamCheckResult);
+                if (isLoggedIn && userType.equals("Student")) {
+                    String KdamCheckResult = database.KdamCheck(courseNum);
+                    if (!KdamCheckResult.equals("false")) {
+                        outPutMessage = new Acknowledgement(opCode);
+                        ((Acknowledgement) outPutMessage).setKdamCoursesList(KdamCheckResult);
+                    }
+                    else {
+                        outPutMessage = new Error(opCode);
+                    }
                 }
                 else {
                     outPutMessage = new Error(opCode);
@@ -133,6 +138,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
             case 7:
                 if (isLoggedIn && userType.equals("Admin") && database.checkIfCourseExists(courseNum)) {
                     outPutMessage = new Acknowledgement(opCode);
+                    ((Acknowledgement) outPutMessage).setCourseNumberAndName(database.courseStatsCourseNumberAndName(courseNum));
                     ((Acknowledgement) outPutMessage).setSeatsAvailable(database.courseStatsSeatsAvailable(courseNum));
                     ((Acknowledgement) outPutMessage).setStudentsRegistered(database.courseStatsStudentsRegistered(courseNum));
                 }
