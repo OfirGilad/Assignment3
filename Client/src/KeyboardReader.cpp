@@ -12,14 +12,14 @@ void KeyboardReader::run() {
     *toTerminate = false;
     *toLogout = false;
     while (!(*toTerminate)) {
-        bool out = false;
-        while (*toLogout){
-            if(*toTerminate){
-                out =true;
+        bool toClose = false;
+        while (*toLogout) {
+            if (*toTerminate) {
+                toClose = true;
                 break;
             }
         }
-        if(out)
+        if (toClose)
             break;
 
         const short bufsize = 1024;
@@ -56,6 +56,7 @@ void KeyboardReader::run() {
         if (onScreenText[0] == "LOGOUT") {
             shortToBytes(4, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
+            *toLogout = true;
         }
 
         if (onScreenText[0] == "COURSEREG") {

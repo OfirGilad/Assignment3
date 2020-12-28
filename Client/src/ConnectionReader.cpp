@@ -15,7 +15,6 @@ void ConnectionReader::run() {
         string outPut;
 
         if (opCode==12){
-
             outPut = "ACK";
             connectionHandler->getBytes(opCodeArray, 2);
             short msgOpCode = bytesToShort(opCodeArray);
@@ -49,17 +48,19 @@ void ConnectionReader::run() {
                 msgData = "";
             }
 
-            if(msgOpCode == 4){
-                *toTerminate=true;
+            if(msgOpCode == 4) {
+                *toTerminate = true;
             }
         }
 
         if (opCode==13){
             outPut="ERROR";
-
             connectionHandler->getBytes(opCodeArray, 2);
             short errorCode = bytesToShort(opCodeArray);
             outPut = outPut + " " + to_string(errorCode);
+            if (errorCode == 4) {
+                *toTerminate = false;
+            }
         }
         if (outPut != "")
             cout << outPut << endl;
