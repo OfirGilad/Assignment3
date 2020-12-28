@@ -36,6 +36,11 @@ void ConnectionReader::run() {
                 msgData = "";
                 connectionHandler->getLine(msgData);
                 outPut = outPut + '\n' + "Student Registered:" + msgData;
+                while (msgData != "]" && msgData != "[]") {
+                    msgData = "";
+                    connectionHandler->getLine(msgData);
+                    outPut = outPut + msgData;
+                }
                 msgData = "";
             }
 

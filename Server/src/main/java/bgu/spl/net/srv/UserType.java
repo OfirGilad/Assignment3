@@ -69,7 +69,7 @@ class Student extends UserType {
     public synchronized boolean unregisterToCourse(Course course) {
         if (courses.containsValue(course)) {
             course.unregisterStudent(this);
-            courses.remove(course.getCourseNum(), course);
+            courses.remove(course.getCourseId(), course);
             //"User unregistered successfully"
             return true;
         }
@@ -79,8 +79,8 @@ class Student extends UserType {
         }
     }
 
-    public synchronized boolean isRegisteredToCourse(int courseNumber) {
-        return courses.containsKey(courseNumber);
+    public synchronized boolean isRegisteredToCourse(Course course) {
+        return courses.containsValue(course);
     }
 }
 

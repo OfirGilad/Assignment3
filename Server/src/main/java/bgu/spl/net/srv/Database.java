@@ -270,7 +270,7 @@ public class Database {
 				StringBuilder coursesRegistered = new StringBuilder("[");
 				while (coursesIterator.hasNext()) {
 					Map.Entry mapEntry = (Map.Entry)coursesIterator.next();
-					coursesRegistered.append(mapEntry.getKey());
+					coursesRegistered.append(((Course)mapEntry.getValue()).getCourseNum());
 					if (coursesIterator.hasNext()) {
 						coursesRegistered.append(",");
 					}
@@ -293,7 +293,7 @@ public class Database {
 		UserType user = users.get(username);
 		String userType = user.getType();
 		if (userType.equals("Student")) {
-			if (((Student)user).isRegisteredToCourse(courseNumber)) {
+			if (((Student)user).isRegisteredToCourse(courses.get(courseNumber))) {
 				//"Student is registered"
 				return "REGISTERED";
 			}
