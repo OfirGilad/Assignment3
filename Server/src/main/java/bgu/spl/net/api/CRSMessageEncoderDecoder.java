@@ -12,13 +12,15 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
     private String username = null;
     private String password = null;
     private int len = 0;
-    private int byteIndex = 0;
+    private int byteIndex = -1;
     private final int[] dataGetter = new int[2];
     private boolean isEndOfMessage = false;
 
     @Override
     public Message decodeNextByte(byte nextByte) {
         //notice that the top 128 ascii characters have the same representation as their utf-8 counterparts
+        pushByte(nextByte);
+        byteIndex++;
         if (byteIndex == 0) {
             dataGetter[0] = byteIndex;
         }
@@ -34,9 +36,6 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
                 else if (password == null && nextByte == '\0') {
                     password = popString();
                     isEndOfMessage = true;
-                }
-                else {
-                    pushByte(nextByte);
                 }
             }
             if (opCode == 4 || opCode == 11) {
@@ -57,12 +56,8 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
                     username = popString();
                     isEndOfMessage = true;
                 }
-                else {
-                    pushByte(nextByte);
-                }
             }
         }
-        byteIndex++;
         if (isEndOfMessage) {
             //Get all data to runtime allocated variables
             int opCodeToSend = opCode;
@@ -75,7 +70,7 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
             courseNum = -1;
             username = null;
             password = null;
-            byteIndex = 0;
+            byteIndex = -1;
             isEndOfMessage = false;
 
             switch (opCodeToSend) {
