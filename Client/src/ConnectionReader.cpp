@@ -3,7 +3,7 @@
 
 using namespace std;
 
-ConnectionReader::ConnectionReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate): connectionHandler(connectionHandler), toLogout(toLogout) toTerminate(toTerminate)  {}
+ConnectionReader::ConnectionReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate): connectionHandler(connectionHandler), toLogout(toLogout), toTerminate(toTerminate)  {}
 
 void ConnectionReader::run() {
     *toTerminate = false;
