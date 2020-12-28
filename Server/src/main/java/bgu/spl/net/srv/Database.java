@@ -151,7 +151,8 @@ public class Database {
 	//Used for: COURSEREG
 	public boolean registerToCourse(String username, int courseNumber) {
 		UserType user = users.get(username);
-		if (user.getClass() != Admin.class) {
+		String userType = user.getType();
+		if (userType.equals("Student")) {
 			if (courses.containsKey(courseNumber)) {
 				Course course = courses.get(courseNumber);
 				return ((Student)user).registerToCourse(course);
@@ -261,7 +262,8 @@ public class Database {
 	public String studentStats(String username) {
 		if (users.containsKey(username)) {
 			UserType user = users.get(username);
-			if (user.getClass() != Admin.class) {
+			String userType = user.getType();
+			if (userType.equals("Student")) {
 				//Export all the HashMap data to int array
 				Set coursesSet = ((Student) user).getCourses().entrySet();
 				Iterator coursesIterator = coursesSet.iterator();
@@ -289,7 +291,8 @@ public class Database {
 	//used for: ISREGISTERED
 	public String isRegistered(String username, int courseNumber) {
 		UserType user = users.get(username);
-		if (user.getClass() != Admin.class) {
+		String userType = user.getType();
+		if (userType.equals("Student")) {
 			if (((Student)user).isRegisteredToCourse(courseNumber)) {
 				//"Student is registered"
 				return "REGISTERED";
@@ -308,7 +311,8 @@ public class Database {
 	//used for: UNREGISTER
 	public boolean unregisterToCourse(String username, int courseNumber) {
 		UserType user = users.get(username);
-		if (user.getClass() != Admin.class) {
+		String userType = user.getType();
+		if (userType.equals("Student")) {
 			if (courses.containsKey(courseNumber)) {
 				Course course = courses.get(courseNumber);
 				return ((Student) user).unregisterToCourse(course);
@@ -323,5 +327,4 @@ public class Database {
 			return false;
 		}
 	}
-
 }

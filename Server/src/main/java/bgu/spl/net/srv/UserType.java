@@ -44,7 +44,7 @@ class Student extends UserType {
     public synchronized boolean registerToCourse(Course course) {
         if (!courses.containsValue(course)) {
             if (!course.isFull()) {
-                if (!course.isEligible(courses)) {
+                if (course.isEligible(courses)) {
                     course.registerStudent(this);
                     courses.put(course.getCourseId(), course);
                     //"User registered successfully"
