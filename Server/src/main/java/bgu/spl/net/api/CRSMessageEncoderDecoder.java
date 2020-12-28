@@ -13,7 +13,6 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
     private String password = null;
     private int len = 0;
     private int byteIndex = -1;
-    private final int[] dataGetter = new int[2];
     private boolean isEndOfMessage = false;
 
     @Override
@@ -21,12 +20,9 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
         //notice that the top 128 ascii characters have the same representation as their utf-8 counterparts
         pushByte(nextByte);
         byteIndex++;
-        if (byteIndex == 0) {
-            dataGetter[0] = byteIndex;
-        }
         if (byteIndex == 1) {
-            dataGetter[1] = byteIndex;
-            opCode = bytesToShort(dataGetter[0], dataGetter[1]);
+            opCode = bytesToShort();
+            popString();
         }
         if (opCode != -1) {
             if (opCode == 1 || opCode == 2 || opCode == 3) {
@@ -42,13 +38,10 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
                 isEndOfMessage = true;
             }
             if (opCode == 5 || opCode == 6 || opCode == 7 || opCode == 9 || opCode == 10) {
-                if (byteIndex == 2) {
-                    dataGetter[0] = byteIndex;
-                }
                 if (byteIndex == 3) {
-                    dataGetter[1] = byteIndex;
-                    courseNum = bytesToShort(dataGetter[0], dataGetter[1]);
+                    courseNum = bytesToShort();
                     isEndOfMessage = true;
+                    popString();
                 }
             }
             if (opCode == 8) {
@@ -166,10 +159,11 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
         return opCodeBytes;
     }
 
-    private short bytesToShort(int startIndex, int endIndex){
+    //Convert the first 2 bytes to short
+    private short bytesToShort(){
         byte[] byteArray = new byte[2];
-        byteArray[0] = bytes[startIndex];
-        byteArray[1] = bytes[endIndex];
+        byteArray[0] = bytes[0];
+        byteArray[1] = bytes[1];
         short convertedData = (short) ((byteArray[0] & 0xff) << 8);
         convertedData += (short) (byteArray[1] & 0xff);
         return convertedData;
