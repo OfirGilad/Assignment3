@@ -59,7 +59,7 @@ void ConnectionReader::run() {
             short errorCode = bytesToShort(opCodeArray);
             outPut = outPut + " " + to_string(errorCode);
             if (errorCode == 4) {
-                *toTerminate = false;
+                *toLogout = false;
             }
         }
         if (outPut != "")

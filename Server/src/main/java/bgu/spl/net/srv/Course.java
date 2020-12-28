@@ -28,7 +28,7 @@ public class Course {
     }
 
     public boolean isFull() {
-        return currentNumberOfStudents < numOfMaxStudent;
+        return currentNumberOfStudents >= numOfMaxStudent;
     }
 
     public boolean isEligible(TreeMap<Integer, Course> courses) {
