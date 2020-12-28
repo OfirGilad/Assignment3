@@ -14,7 +14,7 @@ void ConnectionReader::run() {
         short opCode = bytesToShort(opCodeArray);
         string outPut;
 
-        if (opCode==12){
+        if (opCode==12) {
             outPut = "ACK";
             connectionHandler->getBytes(opCodeArray, 2);
             short msgOpCode = bytesToShort(opCodeArray);
