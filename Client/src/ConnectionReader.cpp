@@ -3,11 +3,11 @@
 
 using namespace std;
 
-ConnectionReader::ConnectionReader(ConnectionHandler* connectionHandler, bool* toTerminate): connectionHandler(connectionHandler), toTerminate(toTerminate)  {}
+ConnectionReader::ConnectionReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate): connectionHandler(connectionHandler), toLogout(toLogout) toTerminate(toTerminate)  {}
 
 void ConnectionReader::run() {
     *toTerminate = false;
-
+    *toLogout = false;
     while (!(*toTerminate)) {
         char* opCodeArray = new char[2];
         connectionHandler->getBytes(opCodeArray, 2);
@@ -25,23 +25,28 @@ void ConnectionReader::run() {
             if(msgOpCode == 6 || msgOpCode == 9 || msgOpCode == 11){
                 connectionHandler->getLine(msgData);
                 outPut= outPut + '\n' + msgData;
+                msgData = "";
             }
 
             if (msgOpCode == 7) {
                 connectionHandler->getLine(msgData);
                 outPut = outPut + '\n' + "Course:" + msgData;
+                msgData = "";
                 connectionHandler->getLine(msgData);
                 outPut = outPut + '\n' + "Seats Available:" + msgData;
+                msgData = "";
                 connectionHandler->getLine(msgData);
                 outPut = outPut + '\n' + "Student Registered:" + msgData;
-
+                msgData = "";
             }
 
             if (msgOpCode == 8) {
                 connectionHandler->getLine(msgData);
                 outPut = outPut + '\n' + "Student:" + msgData;
+                msgData = "";
                 connectionHandler->getLine(msgData);
                 outPut = outPut + '\n' + "Courses:" + msgData;
+                msgData = "";
             }
 
             if(msgOpCode == 4){

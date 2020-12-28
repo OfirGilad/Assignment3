@@ -94,7 +94,7 @@ public class Database {
 	}
 
 	public String userType(String username) {
-		return users.get(username).getClass().toString();
+		return users.get(username).getType();
 	}
 
 	public boolean checkIfCourseExists(int courseNumber) {

@@ -19,6 +19,8 @@ public abstract class UserType {
     public String getPassword() {
         return password;
     }
+
+    public abstract String getType();
 }
 
 class Student extends UserType {
@@ -27,6 +29,10 @@ class Student extends UserType {
     public Student(String username, String password) {
         super(username, password);
         courses = new TreeMap<>();
+    }
+
+    public String getType() {
+        return "Student";
     }
 
     //All Student class methods are synchronized since every change in the student's courses HashMap effect all this functions output
@@ -82,5 +88,9 @@ class Admin extends UserType {
 
     public Admin(String username, String password) {
         super(username, password);
+    }
+
+    public String getType() {
+        return "Admin";
     }
 }

@@ -6,12 +6,21 @@
 
 using namespace std;
 
-KeyboardReader::KeyboardReader(ConnectionHandler* connectionHandler, bool* toTerminate): connectionHandler(connectionHandler), toTerminate(toTerminate)  {}
+KeyboardReader::KeyboardReader(ConnectionHandler* connectionHandler, bool* toLogout, bool* toTerminate): connectionHandler(connectionHandler), toLogout(toLogout), toTerminate(toTerminate)  {}
 
 void KeyboardReader::run() {
     *toTerminate = false;
-
+    *toLogout = false;
     while (!(*toTerminate)) {
+        bool out = false;
+        while (*toLogout){
+            if(*toTerminate){
+                out =true;
+                break;
+            }
+        }
+        if(out)
+            break;
 
         const short bufsize = 1024;
         char buf[bufsize];
@@ -22,7 +31,6 @@ void KeyboardReader::run() {
         boost::split(onScreenText, line, boost::is_any_of(" "));
 
         char dataToBytes[2];
-        string temp;
 
         if (onScreenText[0] == "ADMINREG") {
             shortToBytes(1, dataToBytes);

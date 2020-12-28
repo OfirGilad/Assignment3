@@ -9,12 +9,13 @@ using namespace std;
 class ConnectionReader {
 
 public:
-    ConnectionReader(ConnectionHandler* connectionHandler, bool* toTerminate);
+    ConnectionReader(ConnectionHandler* connectionHandler,bool *toLogout, bool* toTerminate);
 
     void run();
     short bytesToShort(char* bytesArray);
 private:
     ConnectionHandler* connectionHandler;
+    bool* toLogout;
     bool* toTerminate;
 };
 

@@ -27,10 +27,10 @@ int main (int argc, char *argv[]) {
     }
 
     bool *toTerminate = new bool;
-    *toTerminate = false;
+    bool *toLogout = new bool;
 
-    KeyboardReader keyboardReader(&connectionHandler,toTerminate);
-    ConnectionReader connectionReader(&connectionHandler,toTerminate);
+    KeyboardReader keyboardReader(&connectionHandler, toLogout, toTerminate);
+    ConnectionReader connectionReader(&connectionHandler, toLogout, toTerminate);
     thread connectionThread(&ConnectionReader::run, &connectionReader);
     thread keyboardThread(&KeyboardReader::run, &keyboardReader);
     connectionThread.join();
