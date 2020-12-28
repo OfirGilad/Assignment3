@@ -27,22 +27,22 @@ void KeyboardReader::run() {
         if (onScreenText[0] == "ADMINREG") {
             shortToBytes(1, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
-            temp = onScreenText[1] + " " + onScreenText[2] + " ";
-            connectionHandler->sendLine(temp);
+            connectionHandler->sendLine(onScreenText[1]);
+            connectionHandler->sendLine(onScreenText[2]);
         }
 
         if (onScreenText[0] == "STUDENTREG") {
             shortToBytes(2, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
-            temp = onScreenText[1] + " " + onScreenText[2] + " ";
-            connectionHandler->sendLine(temp);
+            connectionHandler->sendLine(onScreenText[1]);
+            connectionHandler->sendLine(onScreenText[2]);
         }
 
         if (onScreenText[0] == "LOGIN") {
             shortToBytes(3, dataToBytes);
             connectionHandler->sendBytes(dataToBytes, 2);
-            temp = onScreenText[1] + " " + onScreenText[2] + " ";
-            connectionHandler->sendLine(temp);
+            connectionHandler->sendLine(onScreenText[1]);
+            connectionHandler->sendLine(onScreenText[2]);
         }
 
         if (onScreenText[0] == "LOGOUT") {

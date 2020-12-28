@@ -1,5 +1,5 @@
 CFLAGS:=-c -Wall -Weffc++ -g -std=c++11 -Iinclude
-LDFLAGS:=-lboost_system
+LDFLAGS:=-lboost_system -pthread
 
 all: BGRSclient
 	g++ -o bin/client bin/connectionHandler.o bin/ConnectionReader.o bin/echoClient.o bin/KeyboardReader.o $(LDFLAGS)

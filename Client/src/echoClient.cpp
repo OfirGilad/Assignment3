@@ -17,7 +17,7 @@ int main (int argc, char *argv[]) {
     //std::string host = argv[1];
     //short port = atoi(argv[2]);
 
-    string host = "127.0.0.1";
+    string host = "132.72.229.220";
     short port = 7777;
     ConnectionHandler connectionHandler(host, port);
     if (!connectionHandler.connect()) {
