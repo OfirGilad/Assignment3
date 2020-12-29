@@ -29,13 +29,13 @@ void ConnectionReader::run() {
 
             if (msgOpCode == 7) {
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Course:" + msgData;
+                outPut = outPut + '\n' + "Course: " + msgData;
                 msgData = "";
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Seats Available:" + msgData;
+                outPut = outPut + '\n' + "Seats Available: " + msgData;
                 msgData = "";
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Student Registered:" + msgData;
+                outPut = outPut + '\n' + "Student Registered: " + msgData;
                 while (msgData != "]" && msgData != "[]") {
                     msgData = "";
                     connectionHandler->getLine(msgData);
@@ -46,10 +46,10 @@ void ConnectionReader::run() {
 
             if (msgOpCode == 8) {
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Student:" + msgData;
+                outPut = outPut + '\n' + "Student: " + msgData;
                 msgData = "";
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Courses:" + msgData;
+                outPut = outPut + '\n' + "Courses: " + msgData;
                 msgData = "";
             }
 
