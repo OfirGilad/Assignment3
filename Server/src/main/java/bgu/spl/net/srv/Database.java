@@ -1,5 +1,4 @@
 package bgu.spl.net.srv;
-import sun.misc.Queue;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class Database {
 	private final ConcurrentHashMap<String, UserType> loggedInUsers;
 	private int numberOfCourses;
 	private final int[] orderedCoursesArray;
-	private final Queue<Integer> orderedCoursesQueue;
+	private final LinkedList<Integer> orderedCoursesList;
 
 	private static class SingletonHolder {
 		private static final Database getInstance = new Database();
@@ -33,19 +32,15 @@ public class Database {
 		courses = new ConcurrentHashMap<>();
 		loggedInUsers = new ConcurrentHashMap<>();
 		numberOfCourses = 0;
-		orderedCoursesQueue = new Queue<>();
+		orderedCoursesList = new LinkedList<>();
 		String coursesFilePath = "./Courses.txt";
 		if(!initialize(coursesFilePath)) {
 			throw new IllegalArgumentException("Courses.txt not found");
 		}
 		orderedCoursesArray = new int[numberOfCourses];
+		ListIterator<Integer> listIterator = orderedCoursesList.listIterator();
 		for (int i = 0; i < numberOfCourses; i++) {
-			try {
-				orderedCoursesArray[i] = orderedCoursesQueue.dequeue();
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			orderedCoursesArray[i] = listIterator.next();
 		}
 	}
 
@@ -70,7 +65,7 @@ public class Database {
 				int[] KdamCoursesList = get_kdam_list_from_string(parts[2]);
 				int numOfMaxStudent = Integer.parseInt(parts[3]);
 				courses.put(courseNum,new Course(courseNum,courseName,KdamCoursesList,numOfMaxStudent,numberOfCourses));
-				orderedCoursesQueue.enqueue(courseNum);
+				orderedCoursesList.addLast(courseNum);
 				numberOfCourses++;
 			}
 		} catch (IOException e) {
