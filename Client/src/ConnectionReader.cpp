@@ -36,7 +36,7 @@ void ConnectionReader::run() {
                 msgData = "";
                 connectionHandler->getLine(msgData);
                 outPut = outPut + '\n' + "Student Registered: " + msgData;
-                while (msgData != "]" && msgData != "[]") {
+                while (msgData.find(']') == string::npos) {
                     msgData = "";
                     connectionHandler->getLine(msgData);
                     outPut = outPut + msgData;
