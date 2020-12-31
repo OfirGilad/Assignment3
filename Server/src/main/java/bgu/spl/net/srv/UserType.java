@@ -24,11 +24,13 @@ public abstract class UserType {
 }
 
 class Student extends UserType {
-    private final TreeMap<Integer, Course> courses;
+    private final TreeMap<Integer, Course> coursesByKeyCourseId;
+    private final TreeMap<Integer, Course> coursesByKeyCourseNum;
 
     public Student(String username, String password) {
         super(username, password);
-        courses = new TreeMap<>();
+        coursesByKeyCourseId = new TreeMap<>();
+        coursesByKeyCourseNum = new TreeMap<>();
     }
 
     public String getType() {
@@ -37,16 +39,21 @@ class Student extends UserType {
 
     //All Student class methods are synchronized since every change in the student's courses HashMap effect all this functions output
     //Example: when Student requests: COURSEREG, and Admin requests: this STUDENTSTAT
-    public synchronized TreeMap<Integer, Course> getCourses() {
-        return courses;
+    public synchronized TreeMap<Integer, Course> getCoursesByKeyCourseId() {
+        return coursesByKeyCourseId;
+    }
+
+    public synchronized TreeMap<Integer, Course> getCoursesByKeyCourseNum() {
+        return coursesByKeyCourseNum;
     }
 
     public synchronized boolean registerToCourse(Course course) {
-        if (!courses.containsValue(course)) {
+        if (!coursesByKeyCourseId.containsValue(course)) {
             if (!course.isFull()) {
-                if (course.isEligible(courses)) {
+                if (course.isEligible(coursesByKeyCourseNum)) {
                     course.registerStudent(this);
-                    courses.put(course.getCourseId(), course);
+                    coursesByKeyCourseId.put(course.getCourseId(), course);
+                    coursesByKeyCourseNum.put(course.getCourseNum(), course);
                     //"User registered successfully"
                     return true;
                 }
@@ -67,9 +74,10 @@ class Student extends UserType {
     }
 
     public synchronized boolean unregisterToCourse(Course course) {
-        if (courses.containsValue(course)) {
+        if (coursesByKeyCourseId.containsValue(course)) {
             course.unregisterStudent(this);
-            courses.remove(course.getCourseId(), course);
+            coursesByKeyCourseId.remove(course.getCourseId(), course);
+            coursesByKeyCourseNum.remove(course.getCourseNum(), course);
             //"User unregistered successfully"
             return true;
         }
@@ -80,7 +88,7 @@ class Student extends UserType {
     }
 
     public synchronized boolean isRegisteredToCourse(Course course) {
-        return courses.containsValue(course);
+        return coursesByKeyCourseId.containsValue(course);
     }
 }
 

@@ -101,7 +101,7 @@ public class Database {
 	}
 
 	//Used for: ADMINREG, STUDENTREG
-	public boolean registerUser(String username, String password, String userType) {
+	public synchronized boolean registerUser(String username, String password, String userType) {
 		if (users.containsKey(username)) {
 			//"User is already registered"
 			return false;
@@ -119,28 +119,31 @@ public class Database {
 
 	//Used for: LOGIN
 	public boolean login(String username, String password) {
-		if (!users.containsKey(username)) {
-			//"User is not registered";
-			return false;
-		}
-		else {
+		if (users.containsKey(username)) {
 			if (users.get(username).getPassword().equals(password)) {
 				//"true if user hasn't logged in yet, else false"
-				return !loggedInUsers.containsKey(username);
+				//if (!loggedInUsers.containsKey(username)) {
+				//	loggedInUsers.put(username, users.get(username));
+					return true;
+				//}
 			}
 			else {
 				//"User password is incorrect"
 				return false;
 			}
 		}
+		//"User is not registered";
+		return false;
 	}
 
 	//Used for: LOGOUT
-	public void logout(String username) {
+	public Boolean logout(String username) {
 		if (loggedInUsers.containsKey(username)) {
-			loggedInUsers.remove(username, users.get(username));
+			//loggedInUsers.remove(username, users.get(username));
 			//"User logged out successfully"
+			return true;
 		}
+		return false;
 	}
 
 	//Used for: COURSEREG
@@ -260,7 +263,7 @@ public class Database {
 			String userType = user.getType();
 			if (userType.equals("Student")) {
 				//Export all the HashMap data to int array
-				Set coursesSet = ((Student) user).getCourses().entrySet();
+				Set coursesSet = ((Student) user).getCoursesByKeyCourseId().entrySet();
 				Iterator coursesIterator = coursesSet.iterator();
 				StringBuilder coursesRegistered = new StringBuilder("[");
 				while (coursesIterator.hasNext()) {

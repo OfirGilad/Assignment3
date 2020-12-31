@@ -167,6 +167,7 @@ class Acknowledgement extends Message {
     private String courseNumberAndName = null;
     private String seatsAvailable = null;
     private String studentsRegistered = null;
+    private String studentStatsName = null;
     private String studentStats = null;
     private String isRegistered = null;
 
@@ -195,6 +196,10 @@ class Acknowledgement extends Message {
         this.studentsRegistered = studentsRegistered;
     }
 
+    public void setStudentStatsName (String studentStatsName) {
+        this.studentStatsName = studentStatsName;
+    }
+
     public void setStudentStats (String studentStats) {
         this.studentStats = studentStats;
     }
@@ -217,6 +222,10 @@ class Acknowledgement extends Message {
 
     public String getStudentsRegistered() {
         return studentsRegistered;
+    }
+
+    public String getStudentStatsName() {
+        return studentStatsName;
     }
 
     public String getStudentStats() {

@@ -150,6 +150,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
             case 8:
                 if (isLoggedIn && userType.equals("Admin") && database.checkIfStudentExists(studentUsername)) {
                     outPutMessage = new Acknowledgement(opCode);
+                    ((Acknowledgement) outPutMessage).setStudentStatsName(studentUsername);
                     ((Acknowledgement) outPutMessage).setStudentStats(database.studentStats(studentUsername));
                 }
                 else {

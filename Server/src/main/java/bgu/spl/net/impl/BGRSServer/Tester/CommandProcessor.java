@@ -42,8 +42,9 @@ public class CommandProcessor {
 
             Thread.sleep(200);
 
-            if (command.contains("STUDENTSTAT") || command.contains("COURSESTAT"))
+            if (command.contains("STUDENTSTAT") || command.contains("COURSESTAT")) {
                 response = consoleReader.getAllResponse();
+            }
             else response = consoleReader.getLastResponse();
             consoleReader.clearLastResponse();
             consoleReader.clearAllResponse();

@@ -4,6 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 
 public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message> {
     private byte[] bytes = new byte[1 << 10]; //start with 1k
@@ -112,9 +115,19 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
                     case 7:
                         messageToReturn.write((((Acknowledgement)message).getCourseNumberAndName() + '\0').getBytes());
                         messageToReturn.write((((Acknowledgement)message).getSeatsAvailable() + '\0').getBytes());
-                        messageToReturn.write((((Acknowledgement)message).getStudentsRegistered() + '\0').getBytes());
+
+                        messageToReturn.write(bytesTrim((((Acknowledgement)message).getStudentsRegistered().getBytes())));
                         break;
                     case 8:
+                        byte[] userNameBytes = (((Acknowledgement)message).getStudentStatsName()).getBytes();
+                        if(userNameBytes[userNameBytes.length - 1] == '\0') {
+                            messageToReturn.write((((Acknowledgement) message).getStudentStatsName()).getBytes());
+                        }
+                        else {
+                            messageToReturn.write((((Acknowledgement) message).getStudentStatsName() + '\0').getBytes());
+                        }
+                        messageToReturn.write((((Acknowledgement)message).getStudentStats() + '\0').getBytes());
+                        break;
                     case 11:
                         messageToReturn.write((((Acknowledgement)message).getStudentStats() + '\0').getBytes());
                         break;
@@ -167,5 +180,21 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
         short convertedData = (short) ((byteArray[0] & 0xff) << 8);
         convertedData += (short) (byteArray[1] & 0xff);
         return convertedData;
+    }
+
+    private byte[] bytesTrim(byte[] byteArray) {
+        LinkedList<Byte> byteList = new LinkedList<>();
+        for (byte b : byteArray) {
+            if (b != 0) {
+                byteList.addLast(b);
+            }
+        }
+        byte[] trimmedBytes = new byte[byteList.size() + 1];
+        ListIterator<Byte> listIterator = byteList.listIterator();
+        for (int i = 0; i < trimmedBytes.length - 1; i++) {
+            trimmedBytes[i] = listIterator.next();
+        }
+        trimmedBytes[trimmedBytes.length - 1] = '\0';
+        return trimmedBytes;
     }
 }

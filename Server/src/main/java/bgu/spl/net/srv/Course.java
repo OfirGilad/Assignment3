@@ -41,7 +41,7 @@ public class Course {
     }
 
     public synchronized void registerStudent(Student student) {
-        if (!isFull() && isEligible(student.getCourses())) {
+        if (!isFull() && isEligible(student.getCoursesByKeyCourseNum())) {
             currentNumberOfStudents ++;
             registeredStudents.put(student.getUsername(), student);
         }
