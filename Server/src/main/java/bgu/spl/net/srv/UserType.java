@@ -49,42 +49,44 @@ class Student extends UserType {
 
     public synchronized boolean registerToCourse(Course course) {
         if (!coursesByKeyCourseId.containsValue(course)) {
-            if (!course.isFull()) {
-                if (course.isEligible(coursesByKeyCourseNum)) {
-                    course.registerStudent(this);
-                    coursesByKeyCourseId.put(course.getCourseId(), course);
-                    coursesByKeyCourseNum.put(course.getCourseNum(), course);
-                    //"User registered successfully"
-                    return true;
-                }
-                else {
-                    //"User isn't meet the Kdam curses requirement"
-                    return false;
-                }
-            }
-            else {
-                //"Course is full"
-                return false;
-            }
+            //if (!course.isFull()) {
+                //if (course.isEligible(coursesByKeyCourseNum)) {
+                    if(course.registerStudent(this)) {
+                        coursesByKeyCourseId.put(course.getCourseId(), course);
+                        coursesByKeyCourseNum.put(course.getCourseNum(), course);
+                        //"User registered successfully"
+                        return true;
+                    }
+                //}
+                //else {
+                //    //"User isn't meet the Kdam curses requirement"
+                //    return false;
+                //}
+            //}
+            //else {
+            //    //"Course is full"
+            //    return false;
+            //}
         }
-        else {
+        //else {
             //"User is already registered"
             return false;
-        }
+        //}
     }
 
     public synchronized boolean unregisterToCourse(Course course) {
         if (coursesByKeyCourseId.containsValue(course)) {
-            course.unregisterStudent(this);
-            coursesByKeyCourseId.remove(course.getCourseId(), course);
-            coursesByKeyCourseNum.remove(course.getCourseNum(), course);
-            //"User unregistered successfully"
-            return true;
+            if (course.unregisterStudent(this)) {
+                coursesByKeyCourseId.remove(course.getCourseId(), course);
+                coursesByKeyCourseNum.remove(course.getCourseNum(), course);
+                //"User unregistered successfully"
+                return true;
+            }
         }
-        else {
+        //else {
             //"User is already unregistered"
             return false;
-        }
+        //}
     }
 
     public synchronized boolean isRegisteredToCourse(Course course) {

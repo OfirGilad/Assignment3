@@ -40,23 +40,25 @@ public class Course {
         return true;
     }
 
-    public synchronized void registerStudent(Student student) {
+    public synchronized boolean registerStudent(Student student) {
         if (!isFull() && isEligible(student.getCoursesByKeyCourseNum())) {
             currentNumberOfStudents ++;
             registeredStudents.put(student.getUsername(), student);
+            return true;
         }
         else {
-            throw new IllegalArgumentException();
+            return false;
         }
     }
 
-    public synchronized void unregisterStudent(Student student) {
+    public synchronized boolean unregisterStudent(Student student) {
         if (registeredStudents.containsValue(student)) {
             currentNumberOfStudents --;
             registeredStudents.remove(student.getUsername(), student);
+            return true;
         }
         else {
-            throw new IllegalArgumentException();
+            return false;
         }
     }
 

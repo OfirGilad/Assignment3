@@ -114,7 +114,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //COURSEREG
             case 5:
-                if (isLoggedIn && userType.equals("Student") && database.registerToCourse(username, courseNum)) {
+                if (isLoggedIn && userType.equals("Student") && database.registerToCourse(LoggedInUserUsername, courseNum)) {
                     outPutMessage = new Acknowledgement(opCode);
                 }
                 else {
@@ -164,7 +164,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
             case 9:
                 if (isLoggedIn && userType.equals("Student") && database.checkIfCourseExists(courseNum)) {
                     outPutMessage = new Acknowledgement(opCode);
-                    ((Acknowledgement) outPutMessage).setIsRegistered(database.isRegistered(username, courseNum));
+                    ((Acknowledgement) outPutMessage).setIsRegistered(database.isRegistered(LoggedInUserUsername, courseNum));
                 }
                 else {
                     outPutMessage = new Error(opCode);
@@ -172,7 +172,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
                 break;
             //UNREGISTER
             case 10:
-                if (isLoggedIn && userType.equals("Student") && database.checkIfCourseExists(courseNum) && database.unregisterToCourse(username, courseNum)) {
+                if (isLoggedIn && userType.equals("Student") && database.checkIfCourseExists(courseNum) && database.unregisterToCourse(LoggedInUserUsername, courseNum)) {
                     outPutMessage = new Acknowledgement(opCode);
                 }
                 else {
@@ -183,7 +183,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
             case 11:
                 if (isLoggedIn && userType.equals("Student")) {
                     outPutMessage = new Acknowledgement(opCode);
-                    ((Acknowledgement) outPutMessage).setStudentStats(database.studentStats(username));
+                    ((Acknowledgement) outPutMessage).setStudentStats(database.studentStats(LoggedInUserUsername));
                 }
                 else {
                     outPutMessage = new Error(opCode);

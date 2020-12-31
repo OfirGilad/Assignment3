@@ -295,12 +295,12 @@ public class Database {
 			}
 			else {
 				//"Student is not registered"
-				return "UNREGISTERED";
+				return "NOT REGISTERED";
 			}
 		}
 		else {
 			//"User is Admin"
-			return "UNREGISTERED";
+			return "NOT REGISTERED";
 		}
 	}
 
