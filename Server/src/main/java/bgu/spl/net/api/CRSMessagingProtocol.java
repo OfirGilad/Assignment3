@@ -8,6 +8,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
     private boolean shouldTerminate = false;
     private boolean isLoggedIn = false;
     private int opCode;
+    private String LoggedInUserUsername;
     private String username;
     private String password;
     private String userType;
@@ -90,6 +91,7 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
             case 3:
                 if (!isLoggedIn && database.login(username, password)) {
                     isLoggedIn = true;
+                    LoggedInUserUsername = username;
                     userType = database.userType(username);
                     outPutMessage = new Acknowledgement(opCode);
                 }
@@ -101,7 +103,8 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
             case 4:
                 if (isLoggedIn) {
                     isLoggedIn = false;
-                    database.logout(username);
+                    database.logout(LoggedInUserUsername);
+                    LoggedInUserUsername = null;
                     outPutMessage = new Acknowledgement(opCode);
                     shouldTerminate = true;
                 }

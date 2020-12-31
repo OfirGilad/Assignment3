@@ -122,10 +122,10 @@ public class Database {
 		if (users.containsKey(username)) {
 			if (users.get(username).getPassword().equals(password)) {
 				//"true if user hasn't logged in yet, else false"
-				//if (!loggedInUsers.containsKey(username)) {
-				//	loggedInUsers.put(username, users.get(username));
+				if (!loggedInUsers.containsKey(username)) {
+					loggedInUsers.put(username, users.get(username));
 					return true;
-				//}
+				}
 			}
 			else {
 				//"User password is incorrect"
@@ -137,13 +137,11 @@ public class Database {
 	}
 
 	//Used for: LOGOUT
-	public Boolean logout(String username) {
+	public void logout(String username) {
 		if (loggedInUsers.containsKey(username)) {
-			//loggedInUsers.remove(username, users.get(username));
+			loggedInUsers.remove(username, users.get(username));
 			//"User logged out successfully"
-			return true;
 		}
-		return false;
 	}
 
 	//Used for: COURSEREG

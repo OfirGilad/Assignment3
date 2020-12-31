@@ -115,7 +115,7 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
                     case 7:
                         messageToReturn.write((((Acknowledgement)message).getCourseNumberAndName() + '\0').getBytes());
                         messageToReturn.write((((Acknowledgement)message).getSeatsAvailable() + '\0').getBytes());
-
+                        //Trim the zeros
                         messageToReturn.write(bytesTrim((((Acknowledgement)message).getStudentsRegistered().getBytes())));
                         break;
                     case 8:
