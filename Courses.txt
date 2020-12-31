@@ -1,12 +1,7 @@
-101|Algebra 1|[]|5
-102|Calculus 1|[]|5
-103|Discrete Math|[]|5
-104|Intro to CS|[]|5
-201|Algebra 2|[101]|5
-202|Calculus 2|[102]|5
-203|Combinatorics|[103,102]|5
-204|Data Structures|[103,104]|5
-301|Algorithms|[103,203,204]|5
-302|Probability|[102,202,203]|5
-304|SPL|[104,202,204]|5
-111|Intro to DS|[201]|5
+2696|7541fe8b|[1989]|12
+1923|d7c77000|[]|10
+2485|d4cc4dec|[]|7
+1411|fba0b923|[1923]|6
+2910|ca73fa42|[]|5
+2209|dda9f207|[]|9
+1989|ce6372a3|[]|10
