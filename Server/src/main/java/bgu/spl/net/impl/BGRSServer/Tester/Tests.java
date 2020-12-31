@@ -355,8 +355,15 @@ public class Tests implements Runnable {
             }
             int numberOfExtraSpacesInKdam=p.getKdamCourses().get(0).numOfMaxStudents-actualSpots;
             if(numTimesSuccess != (int)(actualSpots*4+4+numberOfExtraSpacesInKdam) || numTimesRegistered != actualSpots||numTimesUnsuccessful!=(8-numberOfExtraSpacesInKdam*2)
-                    || numTimesNotRegistered != actualSpots+4||numTimeSucUnregister!=(int)(actualSpots*2+numberOfExtraSpacesInKdam))
-                     response = "CourseReg Test - Kdam Test 2 Failed (Registering Kdam Courses And Then Course)";
+                    || numTimesNotRegistered != actualSpots+4||numTimeSucUnregister!=(int)(actualSpots*2+numberOfExtraSpacesInKdam)) {
+                response = "CourseReg Test - Kdam Test 2 Failed (Registering Kdam Courses And Then Course)";
+                boolean x1 = numTimesSuccess != (int)(actualSpots*4+4+numberOfExtraSpacesInKdam);
+                boolean x2 = numTimesRegistered != actualSpots;
+                boolean x3 = numTimesUnsuccessful!=(8-numberOfExtraSpacesInKdam*2);
+                boolean x4 = numTimesNotRegistered != actualSpots+4;
+                boolean x5 = numTimeSucUnregister!=(int)(actualSpots*2+numberOfExtraSpacesInKdam);
+                System.out.println(x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
+            }
             else     response = "CourseReg Test - Kdam Test 2 Passed";
         }catch(Exception e){
             e.printStackTrace();

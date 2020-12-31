@@ -68,7 +68,8 @@ public class Database {
 				orderedCoursesList.addLast(courseNum);
 				numberOfCourses++;
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			return false;
 		}
 		return true;
@@ -151,7 +152,7 @@ public class Database {
 		if (userType.equals("Student")) {
 			if (courses.containsKey(courseNumber)) {
 				Course course = courses.get(courseNumber);
-				return ((Student)user).registerToCourse(course);
+				return ((Student) user).registerToCourse(course);
 			}
 			else {
 				//"Course number is not valid"
@@ -183,7 +184,7 @@ public class Database {
 			kdamCoursesString.append("]");
 			return kdamCoursesString.toString();
 		}
-		else  {
+		else {
 			return "false";
 		}
 	}
@@ -217,7 +218,7 @@ public class Database {
 			Course course = courses.get(courseNumber);
 			return "(" + courseNumber + ") " + course.getCourseName();
 		}
-		else  {
+		else {
 			return null;
 		}
 	}
@@ -226,9 +227,9 @@ public class Database {
 	public String courseStatsSeatsAvailable(int courseNumber) {
 		if (courses.containsKey(courseNumber)) {
 			Course course = courses.get(courseNumber);
-			return course.getCurrentNumberOfStudents() + "/" + course.getNumOfMaxStudent();
+			return course.getNumberSeatsAvailable() + "/" + course.getNumOfMaxStudent();
 		}
-		else  {
+		else {
 			return null;
 		}
 	}
@@ -240,7 +241,7 @@ public class Database {
 			Iterator courseIterator = courseSet.iterator();
 			StringBuilder studentRegistered = new StringBuilder("[");
 			while (courseIterator.hasNext()) {
-				Map.Entry mapEntry = (Map.Entry)courseIterator.next();
+				Map.Entry mapEntry = (Map.Entry) courseIterator.next();
 				studentRegistered.append(mapEntry.getKey());
 				if (courseIterator.hasNext()) {
 					studentRegistered.append(",");
@@ -249,7 +250,7 @@ public class Database {
 			studentRegistered.append("]");
 			return studentRegistered.toString();
 		}
-		else  {
+		else {
 			return null;
 		}
 	}
@@ -265,20 +266,21 @@ public class Database {
 				Iterator coursesIterator = coursesSet.iterator();
 				StringBuilder coursesRegistered = new StringBuilder("[");
 				while (coursesIterator.hasNext()) {
-					Map.Entry mapEntry = (Map.Entry)coursesIterator.next();
-					coursesRegistered.append(((Course)mapEntry.getValue()).getCourseNum());
+					Map.Entry mapEntry = (Map.Entry) coursesIterator.next();
+					coursesRegistered.append(((Course) mapEntry.getValue()).getCourseNum());
 					if (coursesIterator.hasNext()) {
 						coursesRegistered.append(",");
 					}
 				}
 				coursesRegistered.append("]");
 				return coursesRegistered.toString();
-			} else {
+			}
+			else {
 				//"User is Admin"
 				return "false";
 			}
 		}
-		else  {
+		else {
 			//"User does not exist"
 			return "false";
 		}
@@ -289,7 +291,7 @@ public class Database {
 		UserType user = users.get(username);
 		String userType = user.getType();
 		if (userType.equals("Student")) {
-			if (((Student)user).isRegisteredToCourse(courses.get(courseNumber))) {
+			if (((Student) user).isRegisteredToCourse(courses.get(courseNumber))) {
 				//"Student is registered"
 				return "REGISTERED";
 			}
@@ -313,7 +315,7 @@ public class Database {
 				Course course = courses.get(courseNumber);
 				return ((Student) user).unregisterToCourse(course);
 			}
-			else  {
+			else {
 				//"Course number is not valid"
 				return false;
 			}

@@ -35,7 +35,7 @@ void ConnectionReader::run() {
                 outPut = outPut + '\n' + "Seats Available: " + msgData;
                 msgData = "";
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Student Registered: " + msgData;
+                outPut = outPut + '\n' + "Students Registered: " + msgData;
                 while (msgData.find(']') == string::npos) {
                     msgData = "";
                     connectionHandler->getLine(msgData);

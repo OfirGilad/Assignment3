@@ -79,8 +79,8 @@ public class Course {
         return KdamCoursesList;
     }
 
-    public synchronized int getCurrentNumberOfStudents() {
-        return currentNumberOfStudents;
+    public synchronized int getNumberSeatsAvailable() {
+        return numOfMaxStudent - currentNumberOfStudents;
     }
 
     public int getNumOfMaxStudent() {
