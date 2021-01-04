@@ -119,7 +119,7 @@ public class Database {
 	}
 
 	//Used for: LOGIN
-	public boolean login(String username, String password) {
+	public synchronized boolean login(String username, String password) {
 		if (users.containsKey(username)) {
 			if (users.get(username).getPassword().equals(password)) {
 				//"true if user hasn't logged in yet, else false"
@@ -138,7 +138,7 @@ public class Database {
 	}
 
 	//Used for: LOGOUT
-	public void logout(String username) {
+	public synchronized void logout(String username) {
 		if (loggedInUsers.containsKey(username)) {
 			loggedInUsers.remove(username, users.get(username));
 			//"User logged out successfully"
