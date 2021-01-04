@@ -113,18 +113,19 @@ public class CRSMessageEncoderDecoder implements MessageEncoderDecoder <Message>
                         messageToReturn.write((((Acknowledgement)message).getKdamCoursesList() + '\0').getBytes());
                         break;
                     case 7:
-                        messageToReturn.write((((Acknowledgement)message).getCourseNumberAndName() + '\0').getBytes());
-                        messageToReturn.write((((Acknowledgement)message).getSeatsAvailable() + '\0').getBytes());
+                        messageToReturn.write((((Acknowledgement)message).getCourseNumberAndName() + '\n').getBytes());
+                        messageToReturn.write((((Acknowledgement)message).getSeatsAvailable() + '\n').getBytes());
                         //Trim the zeros
                         messageToReturn.write(bytesTrim((((Acknowledgement)message).getStudentsRegistered().getBytes())));
                         break;
                     case 8:
                         byte[] userNameBytes = (((Acknowledgement)message).getStudentStatsName()).getBytes();
                         if(userNameBytes[userNameBytes.length - 1] == '\0') {
-                            messageToReturn.write((((Acknowledgement) message).getStudentStatsName()).getBytes());
+                            userNameBytes[userNameBytes.length - 1] = '\n';
+                            messageToReturn.write(userNameBytes);
                         }
                         else {
-                            messageToReturn.write((((Acknowledgement) message).getStudentStatsName() + '\0').getBytes());
+                            messageToReturn.write((((Acknowledgement) message).getStudentStatsName() + '\n').getBytes());
                         }
                         messageToReturn.write((((Acknowledgement)message).getStudentStats() + '\0').getBytes());
                         break;

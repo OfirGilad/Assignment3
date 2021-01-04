@@ -21,7 +21,7 @@ void ConnectionReader::run() {
             outPut = outPut + " " + to_string(msgOpCode);
             string msgData;
 
-            if(msgOpCode == 6 || msgOpCode == 9 || msgOpCode == 11){
+            if(msgOpCode == 6 || msgOpCode == 9 || msgOpCode == 11) {
                 connectionHandler->getLine(msgData);
                 outPut= outPut + '\n' + msgData;
                 msgData = "";
@@ -29,22 +29,13 @@ void ConnectionReader::run() {
 
             if (msgOpCode == 7) {
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Course: " + msgData;
-                msgData = "";
-                connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Seats Available: " + msgData;
-                msgData = "";
-                connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Students Registered: " + msgData;
+                outPut = outPut + '\n' + msgData;
                 msgData = "";
             }
 
             if (msgOpCode == 8) {
                 connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Student: " + msgData;
-                msgData = "";
-                connectionHandler->getLine(msgData);
-                outPut = outPut + '\n' + "Courses: " + msgData;
+                outPut = outPut + '\n' + msgData;
                 msgData = "";
             }
 
@@ -53,7 +44,7 @@ void ConnectionReader::run() {
             }
         }
 
-        if (opCode==13){
+        if (opCode==13) {
             outPut="ERROR";
             connectionHandler->getBytes(opCodeArray, 2);
             short errorCode = bytesToShort(opCodeArray);

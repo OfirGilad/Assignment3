@@ -141,9 +141,9 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
             case 7:
                 if (isLoggedIn && userType.equals("Admin") && database.checkIfCourseExists(courseNum)) {
                     outPutMessage = new Acknowledgement(opCode);
-                    ((Acknowledgement) outPutMessage).setCourseNumberAndName(database.courseStatsCourseNumberAndName(courseNum));
-                    ((Acknowledgement) outPutMessage).setSeatsAvailable(database.courseStatsSeatsAvailable(courseNum));
-                    ((Acknowledgement) outPutMessage).setStudentsRegistered(database.courseStatsStudentsRegistered(courseNum));
+                    ((Acknowledgement) outPutMessage).setCourseNumberAndName("Course: " + database.courseStatsCourseNumberAndName(courseNum));
+                    ((Acknowledgement) outPutMessage).setSeatsAvailable("Seats Available: " + database.courseStatsSeatsAvailable(courseNum));
+                    ((Acknowledgement) outPutMessage).setStudentsRegistered("Students Registered: " + database.courseStatsStudentsRegistered(courseNum));
                 }
                 else {
                     outPutMessage = new Error(opCode);
@@ -153,8 +153,8 @@ public class CRSMessagingProtocol implements MessagingProtocol<Message> {
             case 8:
                 if (isLoggedIn && userType.equals("Admin") && database.checkIfStudentExists(studentUsername)) {
                     outPutMessage = new Acknowledgement(opCode);
-                    ((Acknowledgement) outPutMessage).setStudentStatsName(studentUsername);
-                    ((Acknowledgement) outPutMessage).setStudentStats(database.studentStats(studentUsername));
+                    ((Acknowledgement) outPutMessage).setStudentStatsName("Student: " + studentUsername);
+                    ((Acknowledgement) outPutMessage).setStudentStats("Courses: " + database.studentStats(studentUsername));
                 }
                 else {
                     outPutMessage = new Error(opCode);
