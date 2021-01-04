@@ -37,6 +37,7 @@ int main (int argc, char *argv[]) {
     keyboardThread.join();
 
     delete toTerminate;
+    delete toLogout;
 
     return 0;
 }
