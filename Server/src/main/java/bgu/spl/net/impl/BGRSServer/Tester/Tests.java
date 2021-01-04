@@ -353,17 +353,10 @@ public class Tests implements Runnable {
                         break;
                 }
             }
-            int numberOfExtraSpacesInKdam=p.getKdamCourses().get(0).numOfMaxStudents-actualSpots;
+            int numberOfExtraSpacesInKdam=Math.min(p.getKdamCourses().get(0).numOfMaxStudents-actualSpots,2);
             if(numTimesSuccess != (int)(actualSpots*4+4+numberOfExtraSpacesInKdam) || numTimesRegistered != actualSpots||numTimesUnsuccessful!=(8-numberOfExtraSpacesInKdam*2)
-                    || numTimesNotRegistered != actualSpots+4||numTimeSucUnregister!=(int)(actualSpots*2+numberOfExtraSpacesInKdam)) {
+                    || numTimesNotRegistered != actualSpots+4||numTimeSucUnregister!=(int)(actualSpots*2+numberOfExtraSpacesInKdam))
                 response = "CourseReg Test - Kdam Test 2 Failed (Registering Kdam Courses And Then Course)";
-                boolean x1 = numTimesSuccess != (int)(actualSpots*4+4+numberOfExtraSpacesInKdam);
-                boolean x2 = numTimesRegistered != actualSpots;
-                boolean x3 = numTimesUnsuccessful!=(8-numberOfExtraSpacesInKdam*2);
-                boolean x4 = numTimesNotRegistered != actualSpots+4;
-                boolean x5 = numTimeSucUnregister!=(int)(actualSpots*2+numberOfExtraSpacesInKdam);
-                System.out.println(x1 + " " + x2 + " " + x3 + " " + x4 + " " + x5);
-            }
             else     response = "CourseReg Test - Kdam Test 2 Passed";
         }catch(Exception e){
             e.printStackTrace();
@@ -550,9 +543,9 @@ public class Tests implements Runnable {
         courseList=courseList+']';
         return courseList;
     }
-    private static class CourseComparator implements Comparator<Course> {
+    private static class CourseComparator implements Comparator<Tests.Course> {
         @Override
-        public int compare(Course course, Course course1) {
+        public int compare(Tests.Course course, Tests.Course course1) {
             return course.getNumInArray()-course1.getNumInArray();
         }
     }
