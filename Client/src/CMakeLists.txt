@@ -12,7 +12,7 @@ set(SOURCE_FILES
 
 
 # add the executable
-add_executable(spl-03 echoClient.cpp
+add_executable(spl-03 Client.cpp
         connectionHandler.cpp
         ConnectionReader.cpp
         KeyboardReader.cpp)

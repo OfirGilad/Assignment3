@@ -1,16 +1,4 @@
-/snap/clion/137/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/spl211/IdeaProjects/Assignment3/Client/src
+/snap/clion/138/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/spl211/IdeaProjects/Assignment3/Client/src
 -- Configuring done
-CMake Error at CMakeLists.txt:15 (add_executable):
-  Cannot find source file:
-
-    echoClient.cpp
-
-  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .m .M .mm .h .hh .h++ .hm
-  .hpp .hxx .in .txx
-
-
-CMake Error at CMakeLists.txt:15 (add_executable):
-  No SOURCES given to target: spl-03
-
-
-CMake Generate step failed.  Build files cannot be regenerated correctly.
+-- Generating done
+-- Build files have been written to: /home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug

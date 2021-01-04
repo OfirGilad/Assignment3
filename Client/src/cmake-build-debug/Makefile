@@ -59,10 +59,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/137/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/138/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/137/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/138/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -79,7 +79,7 @@ CMAKE_BINARY_DIR = /home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/snap/clion/137/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/138/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -90,7 +90,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/137/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/138/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -143,32 +143,32 @@ spl-03/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/build
 .PHONY : spl-03/fast
 
-Client2Thread.o: Client2Thread.cpp.o
+Client.o: Client.cpp.o
 
-.PHONY : Client2Thread.o
+.PHONY : Client.o
 
 # target to build an object file
-Client2Thread.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client2Thread.cpp.o
-.PHONY : Client2Thread.cpp.o
+Client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client.cpp.o
+.PHONY : Client.cpp.o
 
-Client2Thread.i: Client2Thread.cpp.i
+Client.i: Client.cpp.i
 
-.PHONY : Client2Thread.i
+.PHONY : Client.i
 
 # target to preprocess a source file
-Client2Thread.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client2Thread.cpp.i
-.PHONY : Client2Thread.cpp.i
+Client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client.cpp.i
+.PHONY : Client.cpp.i
 
-Client2Thread.s: Client2Thread.cpp.s
+Client.s: Client.cpp.s
 
-.PHONY : Client2Thread.s
+.PHONY : Client.s
 
 # target to generate assembly for a file
-Client2Thread.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client2Thread.cpp.s
-.PHONY : Client2Thread.cpp.s
+Client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/Client.cpp.s
+.PHONY : Client.cpp.s
 
 ConnectionReader.o: ConnectionReader.cpp.o
 
@@ -251,33 +251,6 @@ connectionHandler.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/connectionHandler.cpp.s
 .PHONY : connectionHandler.cpp.s
 
-echoClient.o: echoClient.cpp.o
-
-.PHONY : echoClient.o
-
-# target to build an object file
-echoClient.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/echoClient.cpp.o
-.PHONY : echoClient.cpp.o
-
-echoClient.i: echoClient.cpp.i
-
-.PHONY : echoClient.i
-
-# target to preprocess a source file
-echoClient.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/echoClient.cpp.i
-.PHONY : echoClient.cpp.i
-
-echoClient.s: echoClient.cpp.s
-
-.PHONY : echoClient.s
-
-# target to generate assembly for a file
-echoClient.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spl-03.dir/build.make CMakeFiles/spl-03.dir/echoClient.cpp.s
-.PHONY : echoClient.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -287,9 +260,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... spl-03"
-	@echo "... Client2Thread.o"
-	@echo "... Client2Thread.i"
-	@echo "... Client2Thread.s"
+	@echo "... Client.o"
+	@echo "... Client.i"
+	@echo "... Client.s"
 	@echo "... ConnectionReader.o"
 	@echo "... ConnectionReader.i"
 	@echo "... ConnectionReader.s"
@@ -299,9 +272,6 @@ help:
 	@echo "... connectionHandler.o"
 	@echo "... connectionHandler.i"
 	@echo "... connectionHandler.s"
-	@echo "... echoClient.o"
-	@echo "... echoClient.i"
-	@echo "... echoClient.s"
 .PHONY : help
 
 

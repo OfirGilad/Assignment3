@@ -54,10 +54,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/137/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/138/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/137/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/138/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -77,18 +77,18 @@ include CMakeFiles/spl-03.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/spl-03.dir/flags.make
 
-CMakeFiles/spl-03.dir/echoClient.cpp.o: CMakeFiles/spl-03.dir/flags.make
-CMakeFiles/spl-03.dir/echoClient.cpp.o: ../echoClient.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/spl-03.dir/echoClient.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spl-03.dir/echoClient.cpp.o -c /home/spl211/IdeaProjects/Assignment3/Client/src/echoClient.cpp
+CMakeFiles/spl-03.dir/Client.cpp.o: CMakeFiles/spl-03.dir/flags.make
+CMakeFiles/spl-03.dir/Client.cpp.o: ../Client.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/spl-03.dir/Client.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spl-03.dir/Client.cpp.o -c /home/spl211/IdeaProjects/Assignment3/Client/src/Client.cpp
 
-CMakeFiles/spl-03.dir/echoClient.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spl-03.dir/echoClient.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/spl211/IdeaProjects/Assignment3/Client/src/echoClient.cpp > CMakeFiles/spl-03.dir/echoClient.cpp.i
+CMakeFiles/spl-03.dir/Client.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spl-03.dir/Client.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/spl211/IdeaProjects/Assignment3/Client/src/Client.cpp > CMakeFiles/spl-03.dir/Client.cpp.i
 
-CMakeFiles/spl-03.dir/echoClient.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spl-03.dir/echoClient.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/spl211/IdeaProjects/Assignment3/Client/src/echoClient.cpp -o CMakeFiles/spl-03.dir/echoClient.cpp.s
+CMakeFiles/spl-03.dir/Client.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spl-03.dir/Client.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/spl211/IdeaProjects/Assignment3/Client/src/Client.cpp -o CMakeFiles/spl-03.dir/Client.cpp.s
 
 CMakeFiles/spl-03.dir/connectionHandler.cpp.o: CMakeFiles/spl-03.dir/flags.make
 CMakeFiles/spl-03.dir/connectionHandler.cpp.o: ../connectionHandler.cpp
@@ -129,38 +129,23 @@ CMakeFiles/spl-03.dir/KeyboardReader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spl-03.dir/KeyboardReader.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/spl211/IdeaProjects/Assignment3/Client/src/KeyboardReader.cpp -o CMakeFiles/spl-03.dir/KeyboardReader.cpp.s
 
-CMakeFiles/spl-03.dir/Client2Thread.cpp.o: CMakeFiles/spl-03.dir/flags.make
-CMakeFiles/spl-03.dir/Client2Thread.cpp.o: ../Client2Thread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/spl-03.dir/Client2Thread.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spl-03.dir/Client2Thread.cpp.o -c /home/spl211/IdeaProjects/Assignment3/Client/src/Client2Thread.cpp
-
-CMakeFiles/spl-03.dir/Client2Thread.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spl-03.dir/Client2Thread.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/spl211/IdeaProjects/Assignment3/Client/src/Client2Thread.cpp > CMakeFiles/spl-03.dir/Client2Thread.cpp.i
-
-CMakeFiles/spl-03.dir/Client2Thread.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spl-03.dir/Client2Thread.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/spl211/IdeaProjects/Assignment3/Client/src/Client2Thread.cpp -o CMakeFiles/spl-03.dir/Client2Thread.cpp.s
-
 # Object files for target spl-03
 spl__03_OBJECTS = \
-"CMakeFiles/spl-03.dir/echoClient.cpp.o" \
+"CMakeFiles/spl-03.dir/Client.cpp.o" \
 "CMakeFiles/spl-03.dir/connectionHandler.cpp.o" \
 "CMakeFiles/spl-03.dir/ConnectionReader.cpp.o" \
-"CMakeFiles/spl-03.dir/KeyboardReader.cpp.o" \
-"CMakeFiles/spl-03.dir/Client2Thread.cpp.o"
+"CMakeFiles/spl-03.dir/KeyboardReader.cpp.o"
 
 # External object files for target spl-03
 spl__03_EXTERNAL_OBJECTS =
 
-spl-03: CMakeFiles/spl-03.dir/echoClient.cpp.o
+spl-03: CMakeFiles/spl-03.dir/Client.cpp.o
 spl-03: CMakeFiles/spl-03.dir/connectionHandler.cpp.o
 spl-03: CMakeFiles/spl-03.dir/ConnectionReader.cpp.o
 spl-03: CMakeFiles/spl-03.dir/KeyboardReader.cpp.o
-spl-03: CMakeFiles/spl-03.dir/Client2Thread.cpp.o
 spl-03: CMakeFiles/spl-03.dir/build.make
 spl-03: CMakeFiles/spl-03.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable spl-03"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/spl211/IdeaProjects/Assignment3/Client/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable spl-03"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/spl-03.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

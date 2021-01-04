@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Assignment3.iml" filepath="$PROJECT_DIR$/.idea/Assignment3.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/spl-net.iml" filepath="$PROJECT_DIR$/Server/spl-net.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/spl-net2.iml" filepath="$PROJECT_DIR$/.idea/spl-net2.iml" />
     </modules>
   </component>
 </project>
