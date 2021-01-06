@@ -5,14 +5,14 @@ import java.util.TreeMap;
 public class Course {
     private final int courseNum;
     private final String courseName;
-    private int[] KdamCoursesList;
+    private Integer[] KdamCoursesList;
     private final int numOfMaxStudent;
     private int currentNumberOfStudents;
     private final TreeMap<String, Student> registeredStudents;
-    private final int courseId;
+    private final Integer courseId;
     private boolean isSorted;
 
-    public Course (int courseNum, String courseName, int[] KdamCoursesList, int numOfMaxStudent, int courseId) {
+    public Course (int courseNum, String courseName, Integer[] KdamCoursesList, int numOfMaxStudent, int courseId) {
         this.courseNum = courseNum;
         this.courseName = courseName;
         this.KdamCoursesList = KdamCoursesList;
@@ -23,7 +23,7 @@ public class Course {
         isSorted = false;
     }
 
-    public int getCourseId() {
+    public Integer getCourseId() {
         return courseId;
     }
 
@@ -62,7 +62,7 @@ public class Course {
         }
     }
 
-    public void setSortedKdamCoursesList (int[] KdamCoursesList) {
+    public void setSortedKdamCoursesList (Integer[] KdamCoursesList) {
         this.KdamCoursesList = KdamCoursesList;
         isSorted = true;
     }
@@ -75,7 +75,7 @@ public class Course {
         return courseName;
     }
 
-    public int[] getKdamCoursesList() {
+    public Integer[] getKdamCoursesList() {
         return KdamCoursesList;
     }
 
